@@ -1,0 +1,198 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>pay</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="js/get_current_user.js"></script>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/skel-layers.min.js"></script>
+		<script src="js/init.js"></script>
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body id="top">
+		<header id="header" class="skel-layers-fixed">
+			<nav id="nav">
+				<ul>
+					<li><a href="index.html">Home</a></li>
+					<li><a href="wallet.html">My_wallet</a></li>
+					<li><a href="pay.html">GOPAY</a></li>
+					<li><a href="login.html">Login</a></li>
+					<li><a href="login.html">Logout</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<section id="two" class="wrapper style2 special">
+			<div class="inner narrow">
+				<header>
+					<h2>Payment</h2>
+				</header>
+				<form class="grid-form" id="pay_form" role="form" action="#">
+					<div class="form-group">
+						<input type="hidden" class="form-control" id="method" name="method" value="2" />
+						Sender: <input type="text" class="form-control" id="sen" name="sen" value="">						
+						Cost: <input type="text" class="form-control" id="cost" name="cost" value="" />
+					</div>
+					<div class="form-group">
+						Receiver: <input type="text" class="form-control" id="rev" name="rev" value="" />
+						Message: <input type="text" class="form-control" id="message" name="message" value="" />
+					</div>
+				</form>
+				<form class="grid-form" method="post" action="#">
+					<input type='button' class="form-control" value='GOPAY' class="form-control" id="clickpay" onclick="">
+				</form>                 
+				<form action="#">
+					<div style='display: none' class="form-control" id="password_div">
+						<label for="password" >password</label>
+						<input name="message" id='password' ></input>
+						<p></p>
+						<input type='button' name='submit' value='GO' class="form-control" onclick='processFormData()' />
+					</div>
+				</form>
+			</div>
+			
+		</section>
+		<script>
+			var name = sessionStorage.getItem("key");
+			document.getElementById("sen").value = name
+		</script>
+		
+		<script src="assets/js/jquery.min.js"></script>
+		<script>
+			$(document).ready(function(){
+				$("#click_recieve").click(function(){
+					$("#recieve_by").fadeToggle();
+				});
+				$("#clickpay").click(function(){
+					$("#password_div").fadeToggle();
+				});
+				$("#aboutme").click(function(){
+					$("#aboutme_detail").fadeToggle();
+				});
+
+			});
+		</script>
+
+		<script>
+			function find_coin(){
+				const sen_name = document.getElementById("sen").value;
+				const num_coin  =  {
+					"method": "light",
+					"name":name,
+					"description":"Zhushan light eID",
+					"pub_key":"",
+				}
+				return $.ajax({
+					url: "http://3.87.137.58:8888/get_balance?user="+sen_name,
+					type: 'Get',
+					success: function (result) {
+						if(result != ''){
+							console.log(sen_name)	
+							console.log('result',result);
+							var res = result.substring(0, 81);
+							console.log(res)
+							// return res
+						}
+						else{
+							alert('oh you dont have money')
+						}
+					},
+					error: function (error) {
+						alert("Cannot get data");
+					}
+					
+				});
+				console.log('all done')
+				
+				
+			}
+			function processFormData(callback) {
+				const password = document.getElementById("password").value;
+				const sender = document.getElementById("sen").value;
+                const receiver = document.getElementById("rev").value;
+                const cost = document.getElementById("cost").value;
+				const description = document.getElementById("message").value;
+				const txnElement = document.getElementById("txn");
+				$.when(find_coin()).done(function(tex){
+					
+					var coin = tex.substring(0, 81);
+					console.log(tex)
+					const data  =  {
+						"sen":sender,
+						"rev":receiver,
+						"method":'2',
+						"description":description,
+						"txn":coin,
+					}
+					console.log(data);
+				console.log(password)
+				$.ajax({
+					url: "http://3.87.137.58:8888/send_token",
+					type: 'POST',
+					headers:{
+						"contentType":'application/json;',
+						"X-API-key":password,
+					},
+					contentType: 'application/json;',
+					data:JSON.stringify(data),
+					
+					success: function (result) {
+						console.log('result',result);
+						if(result){			
+							if(result.includes('error')){
+								alert('error please check');
+							}									
+							else{
+								$.ajax({
+									type: "post",
+									url: "http://localhost:1993/pay",
+									dataType: "json",
+									data:{ sender: sender, receiver: receiver, cost:cost,message:description},
+									success: function(data){
+									//接受返回的数据，前端判断采取的动作
+									console.log(data);
+									alert('轉帳成功');
+									}
+								});	
+							}	
+						}					
+					},
+				error: function (error) {
+					alert("Cannot get data");
+				}					
+				});
+					alert('帳單成立請稍待');
+				})
+				
+			}
+		</script>
+	</body>
+</html>
+
+
+
+<!-- <script>
+    $(document).ready(function(){
+        $("#clickpay").click(function(){
+            const senderElement = document.getElementById("sen");
+            const sender = senderElement.value;
+            // const sender = document.getElementById("sen").value;
+            const receiver = document.getElementById("rev").value;
+            const cost = document.getElementById("cost").value;
+            const description = document.getElementById("message").value;
+            $.ajax({
+                type: "post",
+                url: "http://localhost:1993/pay",
+                dataType: "json",
+                data:{ sender: sender, receiver: receiver, cost:cost,message:description},
+                success: function(data){
+                //接受返回的数据，前端判断采取的动作
+                console.log(data);
+                alert('轉帳成功');
+                }
+            });
+        });
+    });
+</script> -->

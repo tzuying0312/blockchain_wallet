@@ -1,0 +1,254 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>register</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="js/get_current_user.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/skel-layers.min.js"></script>
+		<script src="js/init.js"></script>
+		<link rel="stylesheet" href="assets/css/main.css" />	</head>
+	<body id="top">
+		<header id="header" class="skel-layers-fixed">
+			<nav id="nav">
+				<ul>
+					<li><a href="index.html">Home</a></li>
+					<li><a href="wallet.html">My_wallet</a></li>
+					<li><a href="pay.html">GOPAY</a></li>
+					<li><a href="login.html">Login</a></li>
+					<li><a href="login.html">Logout</a></li>
+				</ul>
+			</nav>
+		</header>
+		<form id="pay_form" role="form" action="pay.html" method=""></form>
+		<section id="two" class="wrapper style2 special">
+			<div class="inner narrow">
+				<header>
+					<h2>SIGNUP</h2>
+				</header>
+				<form class="grid-form" id="pay_form" role="form" action="#" method="post">
+					<div class="form-group">
+						<p> Name: <input type="text" class="form-control" id="name" name="name" value="" />	
+					</div>
+					<div class="form-group">
+						<p> Password: <input type="password" class="form-control" id="password" name="password" value="" />
+					</div>
+				</form>
+				<p>SCU_gmail <input type="email" class="form-control" id="email" name="email" value="" />
+				<form class="grid-form" id="pay_form" role="form" action="#" method="post">
+				<div class="form-group" >
+						<select id ='academy'>
+							<option  hidden>請選擇學院▾</option>
+							<option>人文社會學院</option>
+							<option>外語學院</option>
+							<option>理學院</option>
+							<option>法學院</option>
+							<option>商學院</option>
+							<option>巨資學院</option>
+							<option>其他</option>
+						</select>
+				</div>
+				<div class="form-group">
+						<select id = 'grade'>
+							<option  hidden>請選擇年級▾</option>
+							<option>大一</option>
+							<option>大二</option>
+							<option>大三</option>
+							<option>大四</option>
+							<option>大五</option>
+							<option>其他</option>
+						</select>
+				</div>
+				<div class="form-group">
+						<select id = 'identity'>
+							<option  hidden>請選擇職別▾</option>
+							<option>學生</option>
+							<option>教職員</option>
+							<option>其他</option>
+						</select>
+				</div>
+				<br></br>
+				<input id="login_submit" type='button' name='submit' value='SignUp!' class="form-control" />
+				<!-- <input  type='button' name='submit' value='SignUp!' class="form-control" onclick='newdid(); '/> -->
+				</form>
+			</div>
+		</section>
+		<script>
+			$(document).ready(function(){
+				$("#login_submit").click(function(){
+					const nameElement = document.getElementById("name");
+					const name = nameElement.value;
+					const passwordElement = document.getElementById("password");
+					const password = document.getElementById("password").value;
+					const emailElement = document.getElementById("email");
+					const email = document.getElementById("email").value;
+					var a = document.getElementById("academy");
+					var academy = a.options[a.selectedIndex].value;
+					var g = document.getElementById("grade");
+					var grade = g.options[g.selectedIndex].value;
+					var i = document.getElementById("identity");
+					var identity = i.options[i.selectedIndex].value;
+					const sinup  =  {
+					"method": "light",
+					"name":name,
+					"description":"Zhushan light eID",
+					"pub_key":"",
+					}
+
+					$.ajax({
+						type: "post",
+						url: "http://localhost:1993/register",
+						dataType: "json",
+						data:{ username: name, password: password, email:email, academy:academy, grade:grade, identity:identity},
+						success: function(data){
+						//接受返回的数据，前端判断采取的动作
+						console.log(data);
+						if(data){
+							if(data.message == false){
+								alert('帳號已存在');
+								// window.location.href="#";
+							}
+							else{
+								alert('註冊中，請稍後');
+								$.ajax({
+									url: "http://3.87.137.58:8888/new_did",
+									type: 'POST',
+									headers:{
+										"contentType":'application/json;',
+										"X-API-key":password,
+									},
+									contentType: 'application/json;',
+									data:JSON.stringify(sinup),
+									success: function (result) {
+									console.log(result);
+									if(result){		
+										if(result.includes('Account already exist')){
+											alert('帳號已存在');
+										}
+										else{
+											alert('註冊成功');
+										}
+									}		
+									},
+									error: function (error) {
+										alert("Cannot get data");
+									}
+								});
+							}
+						}
+						}
+					});
+				});
+			});
+		</script>
+	</body>
+</html>
+		<!-- <script>
+			$(document).ready(function(){
+				$("#login_submit").click(function(){
+					const nameElement = document.getElementById("name");
+					const name = nameElement.value;
+					const passwordElement = document.getElementById("password");
+					const password = document.getElementById("password").value;
+					$.ajax({
+						type: "post",
+						url: "http://localhost:1993/register",
+						dataType: "json",
+						data:{ username: name, password: password },
+						success: function(data){
+						//接受返回的数据，前端判断采取的动作
+						console.log(data);
+						if(data){
+							if(data.message == false){
+								alert('帳號已存在');
+							// window.location.href="#";
+							}
+							else{
+								alert('註冊成功');
+							// window.location.href="http://localhost:1993";
+							}
+						}
+						}
+					});
+				});
+			});
+		</script> -->
+		<!-- <script>
+			function newdid() {
+				const nameElement = document.getElementById("name");
+				const name = nameElement.value;
+				const passwordElement = document.getElementById("password");
+				const password = document.getElementById("password").value;
+				const sinup  =  {
+					"method": "light",
+					"name":name,
+					"description":"Zhushan light eID",
+					"pub_key":"",
+				}
+				console.log(sinup);
+				$.ajax({
+					url: "http://3.87.137.58:8888/new_did",
+					type: 'POST',
+					headers:{
+						"contentType":'application/json;',
+						"X-API-key":password,
+					},
+					contentType: 'application/json;',
+					data:JSON.stringify(sinup),
+					success: function (result) {
+						console.log('result',result);
+					},
+					error: function (error) {
+						alert("Cannot get data");
+					}
+				});
+			}
+		</script> -->
+		<!-- <script>
+		$.ajax({
+			url: "http://3.87.137.58:8888/new_did",
+			type: 'POST',
+			headers:{
+				"contentType":'application/json;',
+				"X-API-key":password,
+			},
+			contentType: 'application/json;',
+			data:JSON.stringify(sinup),
+			success: function (result) {
+			console.log(result);
+			alert('註冊中，請稍後');
+			if(result){		
+				if(result.includes('Account already exist')){
+					alert('帳號已存在');
+					// window.location.href="#";
+				}
+				else{
+					$.ajax({
+						type: "post",
+						url: "http://localhost:1993/register",
+						dataType: "json",
+						data:{ username: name, password: password, email:email, academy:academy, grade:grade, identity:identity},
+						success: function(data){
+						//接受返回的数据，前端判断采取的动作
+						console.log(data);
+						if(data){
+							if(data.message == false){
+								alert('帳號已存在');
+								// window.location.href="#";
+							}
+							else{
+								alert('註冊成功');
+								// window.location.href="http://localhost:1993";
+							}
+						}
+					}
+					});
+				}
+			}		
+			},
+			error: function (error) {
+				alert("Cannot get data");
+			}
+		});
+		</script> -->
