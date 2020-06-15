@@ -145,9 +145,9 @@
 					success: function (result) {
 						console.log('result',result);
 						if(result){			
-							if(result.message = 'error'){
+							if(result.status == 'error'){
 								alert('error please check');
-							}									
+							}										
 							else{
 								$.ajax({
 									type: "post",
