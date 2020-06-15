@@ -155,7 +155,15 @@ app.post('/pay', function (req, res) {
 
   });
 
+app.get('/', function (req, res) {
+    res.send('Hello World!');
+  });
 
-var server = app.listen(1993,function(){
-    console.log('server connect');
-})
+  var server = app.listen(process.env.PORT || 1993, function() {
+    var port = server.address().port;
+    console.log('server connect port :', port);
+  });
+
+// var server = app.listen(1993,function(){
+//     console.log('server connect');
+// })

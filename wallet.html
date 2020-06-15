@@ -19,7 +19,7 @@
 					<li><a href="wallet.html">My_wallet</a></li>
 					<li><a href="pay.html">GOPAY</a></li>
 					<li><a href="login.html">Login</a></li>
-					<li><a href="login.html">Logout</a></li>
+					<li><a href="login.html" id="logout_button">Logout</a></li>
 				</ul>
 			</nav>
 		</header>
@@ -29,6 +29,14 @@
 			get_balance_by_user("http://3.87.137.58:8888/get_balance?user="+name)
 		</script>
 		
+		<script>
+			$(document).ready(function(){
+				$('#logout_button').click(function(){
+				console.log('remove')
+				sessionStorage.removeItem("key");
+				});
+			});
+		</script>
 
         <!-- mywallet -->
         <section id="two" class="wrapper style special">

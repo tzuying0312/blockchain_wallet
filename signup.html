@@ -17,7 +17,7 @@
 					<li><a href="wallet.html">My_wallet</a></li>
 					<li><a href="pay.html">GOPAY</a></li>
 					<li><a href="login.html">Login</a></li>
-					<li><a href="login.html">Logout</a></li>
+					<li><a href="login.html" id="logout_button">Logout</a></li>
 				</ul>
 			</nav>
 		</header>
@@ -95,8 +95,8 @@
 					"description":"Zhushan light eID",
 					"pub_key":"",
 					}
-
-					$.ajax({
+					
+					$.ajax({				
 						type: "post",
 						url: "http://localhost:1993/register",
 						dataType: "json",
@@ -139,6 +139,14 @@
 						}
 						}
 					});
+				});
+			});
+		</script>
+		<script>
+			$(document).ready(function(){
+				$('#logout_button').click(function(){
+				console.log('remove')
+				sessionStorage.removeItem("key");
 				});
 			});
 		</script>
