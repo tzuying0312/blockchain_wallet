@@ -58,61 +58,61 @@
 			</div>
 		</section>
 		<script>
-			$(document).ready(function(){
+		$(document).ready(function(){
+			if(localStorage.getItem('remember_me') == 'yes'){
+				console.log(localStorage.getItem('user_name'))
+				document.getElementById("name").value = localStorage.getItem('user_name')
+				document.getElementById("dropdownCheck").checked = true;
+			}
+			$('#logout_button').click(function(){
+				console.log('remove')
+				sessionStorage.removeItem("key");
+			});
+			$('#remember_button').click(function(){
 				if(localStorage.getItem('remember_me') == 'yes'){
-					console.log(localStorage.getItem('user_name'))
-					document.getElementById("name").value = localStorage.getItem('user_name')
-					document.getElementById("dropdownCheck").checked = true;
+					console.log('no remember')
+					localStorage.removeItem('user_name')
+					localStorage.removeItem('remember')
 				}
-				$('#logout_button').click(function(){
-					console.log('remove')
-					sessionStorage.removeItem("key");
-				});
-				$('#remember_button').click(function(){
-					if(localStorage.getItem('remember_me') == 'yes'){
-						console.log('no remember')
-						localStorage.removeItem('user_name')
-						localStorage.removeItem('remember')
-					}
-					else{
-						console.log('remember')
-						localStorage.setItem('user_name', $('#name').val());
-						localStorage.setItem('remember_me', 'yes');
-					}
-					
-				})
-			  //查询数据库确认账户密码是否正确
-			   $("#login").click(function(){
-				  var username=$('#name').val();
-				  var password=$('#password').val();
-				  //这里实现对 username和password格式的判断
-				  //........
-				  //发送ajax请求 使用post方式发送json字符串给后台login
-				  $.ajax({
-					  type: "post",
-					  url: "http://localhost:1993/login",
-					  dataType: "json",
-					  data:{ username: username, password: password },
-					  success: function(data){
-					  //接受返回的数据，前端判断采取的动作
-						console.log(data);
-						if(data){
-							if(data.message==false){
-							  alert('帳號密碼有誤')
-							  $("#name").val("");
-							  $("#password").val("");
-							}else{
-							  alert('登入成功');
-							sessionStorage.setItem("key", username);
-							window.location.href="wallet.html";
-							}
-						}
-					  }
-
-				  });
-			  })
+				else{
+					console.log('remember')
+					localStorage.setItem('user_name', $('#name').val());
+					localStorage.setItem('remember_me', 'yes');
+				}
+				
 			})
-		</script>
+		  //查询数据库确认账户密码是否正确
+			$("#login").click(function(){
+			  var username=$('#name').val();
+			  var password=$('#password').val();
+			  //这里实现对 username和password格式的判断
+			  //........
+			  //发送ajax请求 使用post方式发送json字符串给后台login
+			  $.ajax({
+				  type: "post",
+				  url: "http://localhost:1993/login",
+				  dataType: "json",
+				  data:{ username: username, password: password },
+				  success: function(data){
+				  //接受返回的数据，前端判断采取的动作
+					console.log(data);
+					if(data){
+						if(data.message==false){
+						  alert('帳號密碼有誤')
+						  $("#name").val("");
+						  $("#password").val("");
+						}else{
+						  alert('登入成功');
+						sessionStorage.setItem("key", username);
+						window.location.href="wallet.html";
+						}
+					}
+				  }
+
+			  });
+		  })
+		})
+	  </script>
 	</body>
 
 </html>
