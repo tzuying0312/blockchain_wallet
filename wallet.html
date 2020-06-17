@@ -57,13 +57,13 @@
                 </div>
                 <div class="description">
                   <div class="info">
-                    <h3 id="trans_sender" > </h3>
-                    <span id="trans_message"></span>
+                    <h3 id="trans_sender1" > </h3>
+                    <span id="trans_message1"></span>
 
-                    -<span id="trans_time"></span>
+                    -<span id="trans_time1"></span>
                   </div>
                   <div class="info">
-                    <h3 id="trans_money"></h3>
+                    <h3 id="trans_money1"></h3>
                     <span id='status'></span>
                     
                   </div>
@@ -110,6 +110,13 @@
             </form>
             </div>
 		</section>
+		<script>
+			var name = sessionStorage.getItem("key");
+			if (name == 'null'){
+				alert("請先登入");
+				window.location.href="login.html";	
+			}
+		</script>
 		<script src="assets/js/jquery.min.js"></script>
 		<script>
 			$(document).ready(function(){
@@ -124,35 +131,32 @@
 					// url: "http://localhost:1993/pay",
 					dataType: "json",
 					success: function(data){
-						var trans_data1 = data[0]
-						$('#trans_sender').text(trans_data1['sender'])
-						$('#trans_message').text(trans_data1['message'])
-						$('#trans_time').text(trans_data1['paydate']) 
-						var trans_data2 = data[1]
-						$('#trans_sender2').text(trans_data2['sender'])
-						$('#trans_message2').text(trans_data2['message'])
-						$('#trans_time2').text(trans_data2['paydate']) 
-						var trans_data3 = data[2]
-						$('#trans_sender3').text(trans_data3['sender'])
-						$('#trans_message3').text(trans_data3['message'])
-						$('#trans_time3').text(trans_data3['paydate']) 
-						if(trans_data1['cost']== ''){
-							$('#trans_money').text('+ 1 東吳幣') 
-						}
-						else{
-							$('#trans_money').text('+ '+trans_data1['cost']+' 東吳幣')
-						}
-						if(trans_data2['cost']== ''){
-							$('#trans_money2').text('+ 1 東吳幣') 
-						}
-						else{
-							$('#trans_money2').text('+ '+trans_data1['cost']+' 東吳幣')
-						}
-						if(trans_data3['cost']== ''){
-							$('#trans_money3').text('+ 1 東吳幣') 
-						}
-						else{
-							$('#trans_money3').text('+ '+trans_data1['cost']+' 東吳幣')
+						for ( i=1 ; i < 4 ; i++ ){
+							console.log(i);
+							var trans_data = data.pop()
+							// $('#trans_sender'+i).text(trans_data['sender'])
+							$('#trans_message'+i).text(trans_data['message'])
+							$('#trans_time'+i).text(trans_data['paydate']) 
+							if(trans_data['sender'] == sessionStorage.getItem("key")){
+								if(trans_data['cost']== ''){
+									$('#trans_sender'+i).text(trans_data['receiver'])
+									$('#trans_money'+i).text('- 1 東吳幣') 	
+								}
+								else{
+									$('#trans_money'+i).text('- '+trans_data['cost']+' 東吳幣')
+									$('#trans_sender'+i).text(trans_data['receiver'])
+								}
+							}
+							else{
+								if(trans_data['cost']== ''){
+									$('#trans_sender'+i).text(trans_data['sender'])
+									$('#trans_money'+i).text('+ 1 東吳幣') 	
+								}
+								else{
+									$('#trans_sender'+i).text(trans_data['sender'])
+									$('#trans_money'+i).text('+ '+trans_data['cost']+' 東吳幣')
+								}
+							}
 						}
 						
 					},
@@ -189,3 +193,36 @@
 		  </style>
 	</body>
 </html>
+
+<!-- <script>
+var trans_data1 = data[0]
+$('#trans_sender').text(trans_data1['sender'])
+$('#trans_message').text(trans_data1['message'])
+$('#trans_time').text(trans_data1['paydate']) 
+var trans_data2 = data[1]
+$('#trans_sender2').text(trans_data2['sender'])
+$('#trans_message2').text(trans_data2['message'])
+$('#trans_time2').text(trans_data2['paydate']) 
+var trans_data3 = data[2]
+$('#trans_sender3').text(trans_data3['sender'])
+$('#trans_message3').text(trans_data3['message'])
+$('#trans_time3').text(trans_data3['paydate']) 
+if(trans_data1['cost']== ''){
+	$('#trans_money').text('+ 1 東吳幣') 
+}
+else{
+	$('#trans_money').text('+ '+trans_data1['cost']+' 東吳幣')
+}
+if(trans_data2['cost']== ''){
+	$('#trans_money2').text('+ 1 東吳幣') 
+}
+else{
+	$('#trans_money2').text('+ '+trans_data1['cost']+' 東吳幣')
+}
+if(trans_data3['cost']== ''){
+	$('#trans_money3').text('+ 1 東吳幣') 
+}
+else{
+	$('#trans_money3').text('+ '+trans_data1['cost']+' 東吳幣')
+}
+</script> -->

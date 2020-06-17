@@ -168,8 +168,9 @@ app.get('/pay/:user',function(req,res){
     res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
     res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
     res.header("X-Powered-By",' 3.2.1')
-    var updatestr = {'receiver': req.params.user};
-    PaySchema.find(updatestr, function(err, data){
+    var updatestra = {'receiver': req.params.user};
+    var updatestrb = {'sender': req.params.user};
+    PaySchema.find({$or:[updatestra,updatestrb]}, function(err, data){
         if (err) {
             console.log("Error:" + err);
         }
