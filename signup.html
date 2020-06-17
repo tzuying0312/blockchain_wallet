@@ -21,13 +21,13 @@
 				</ul>
 			</nav>
 		</header>
-		<form id="pay_form" role="form" action="pay.html" method=""></form>
+		<form  role="form" action="pay.html" method=""></form>
 		<section id="two" class="wrapper style2 special">
 			<div class="inner narrow">
 				<header>
 					<h2>SIGNUP</h2>
 				</header>
-				<form class="grid-form" id="pay_form" role="form" action="#" method="post">
+				<form class="grid-form" role="form" action="#" method="post">
 					<div class="form-group">
 						<p> Name: <input type="text" class="form-control" id="name" name="name" value="" />	
 					</div>
@@ -36,7 +36,7 @@
 					</div>
 				</form>
 				<p>SCU_gmail <input type="email" class="form-control" id="email" name="email" value="" />
-				<form class="grid-form" id="pay_form" role="form" action="#" method="post">
+				<form class="grid-form"  role="form" action="#" method="post">
 				<div class="form-group" >
 						<select id ='academy'>
 							<option  hidden>請選擇學院▾</option>
@@ -95,8 +95,8 @@
 					"description":"Zhushan light eID",
 					"pub_key":"",
 					}
-					
-					$.ajax({				
+
+					$.ajax({
 						type: "post",
 						url: "http://localhost:1993/register",
 						dataType: "json",
@@ -139,14 +139,6 @@
 						}
 						}
 					});
-				});
-			});
-		</script>
-		<script>
-			$(document).ready(function(){
-				$('#logout_button').click(function(){
-				console.log('remove')
-				sessionStorage.removeItem("key");
 				});
 			});
 		</script>

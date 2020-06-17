@@ -18,7 +18,7 @@
 					<li><a href="wallet.html">My_wallet</a></li>
 					<li><a href="pay.html">GOPAY</a></li>
 					<li><a href="login.html">Login</a></li>
-					<li><a href="login.html" id="logout_button">Logout</a></li>
+					<li ><a href="login.html" id="logout_button">Logout</a></li>
 				</ul>
 			</nav>
 		</header>
@@ -27,7 +27,7 @@
 				<header>
 					<h2>LOGIN</h2>
 				</header>
-				<form class="grid-form" id="pay_form" role="form" action="/login" method="post">
+				<form class="grid-form"  role="form" action="/login" method="post">
 					<div class="form-group">
 						<label for="name">Username</label>
 						<p><input type="text" class="form-control" id="name" name="name" value="" placeholder="Enter user name" />	
@@ -40,7 +40,7 @@
 					<!-- <input  type='button' name='submit' value='LOGIN' class="form-control" onclick='login(); '/> -->
 					<br></br>
 					<div class="form-group">
-						<div class="form-check">
+						<div class="form-check" >
 						  <input type="checkbox" class="form-check-input" id="dropdownCheck">
 						  <label class="form-check-label" for="dropdownCheck" id="remember_button">
 							Remember me
@@ -65,61 +65,61 @@
 			}
 		</script>
 		<script>
-		$(document).ready(function(){
-			if(localStorage.getItem('remember_me') == 'yes'){
-				console.log(localStorage.getItem('user_name'))
-				document.getElementById("name").value = localStorage.getItem('user_name')
-				document.getElementById("dropdownCheck").checked = true;
-			}
-			$('#logout_button').click(function(){
-				console.log('remove')
-				sessionStorage.removeItem("key");
-			});
-			$('#remember_button').click(function(){
+			$(document).ready(function(){
 				if(localStorage.getItem('remember_me') == 'yes'){
-					console.log('no remember')
-					localStorage.removeItem('user_name')
-					localStorage.removeItem('remember')
+					console.log(localStorage.getItem('user_name'))
+					document.getElementById("name").value = localStorage.getItem('user_name')
+					document.getElementById("dropdownCheck").checked = true;
 				}
-				else{
-					console.log('remember')
-					localStorage.setItem('user_name', $('#name').val());
-					localStorage.setItem('remember_me', 'yes');
-				}
-				
-			})
-		  //查询数据库确认账户密码是否正确
-			$("#login").click(function(){
-			  var username=$('#name').val();
-			  var password=$('#password').val();
-			  //这里实现对 username和password格式的判断
-			  //........
-			  //发送ajax请求 使用post方式发送json字符串给后台login
-			  $.ajax({
-				  type: "post",
-				  url: "http://localhost:1993/login",
-				  dataType: "json",
-				  data:{ username: username, password: password },
-				  success: function(data){
-				  //接受返回的数据，前端判断采取的动作
-					console.log(data);
-					if(data){
-						if(data.message==false){
-						  alert('帳號密碼有誤')
-						  $("#name").val("");
-						  $("#password").val("");
-						}else{
-						  alert('登入成功');
-						sessionStorage.setItem("key", username);
-						window.location.href="wallet.html";
-						}
+				$('#logout_button').click(function(){
+					console.log('remove')
+					sessionStorage.removeItem("key");
+				});
+				$('#remember_button').click(function(){
+					if(localStorage.getItem('remember_me') == 'yes'){
+						console.log('no remember')
+						localStorage.removeItem('user_name')
+						localStorage.removeItem('remember')
 					}
-				  }
+					else{
+						console.log('remember')
+						localStorage.setItem('user_name', $('#name').val());
+						localStorage.setItem('remember_me', 'yes');
+					}
+					
+				})
+			  //查询数据库确认账户密码是否正确
+			    $("#login").click(function(){
+				  var username=$('#name').val();
+				  var password=$('#password').val();
+				  //这里实现对 username和password格式的判断
+				  //........
+				  //发送ajax请求 使用post方式发送json字符串给后台login
+				  $.ajax({
+					  type: "post",
+					  url: "http://localhost:1993/login",
+					  dataType: "json",
+					  data:{ username: username, password: password },
+					  success: function(data){
+					  //接受返回的数据，前端判断采取的动作
+						console.log(data);
+						if(data){
+							if(data.message==false){
+							  alert('帳號密碼有誤')
+							  $("#name").val("");
+							  $("#password").val("");
+							}else{
+							  alert('登入成功');
+							sessionStorage.setItem("key", username);
+							window.location.href="wallet.html";
+							}
+						}
+					  }
 
-			  });
-		  })
-		})
-	  </script>
+				  });
+			  })
+			})
+		  </script>
 	</body>
 
 </html>

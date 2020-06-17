@@ -11,12 +11,35 @@ var mongoose = require('mongoose');
 var DB_URL = 'mongodb://localhost:27017/wallet'
 mongoose.connect(DB_URL);
 
+
+// PaySchema.aggregate([
+//         { "$addFields": {
+//             "sentDateString": { 
+//                 '$paydate'
+//                 // "$paydate": { 
+//                 //     "format": "%Y-%m-%d", 
+//                 //     "date": "$paydate"
+//                 // } 
+//             }
+//         } }
+//     ])
+
+
 //解析表單數據
 app.use(bodyParser.urlencoded({extended:true}))
 
 /*插入數據函數*/
 function insert(name,psw,email,academy,grade,identity){
     //數據格式
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+    var hour = dateObj.getHours()   
+    var minute =dateObj.getMinutes() 
+
+    var newdate = year + "/" + month + "/" + day + ' '+ hour +":"+ minute;
+    console.log(newdate)
     var user =  new userSchema({
                 username : name,
                 userpsw : psw,
@@ -24,7 +47,7 @@ function insert(name,psw,email,academy,grade,identity){
                 academy : academy,
                 grade : grade,
                 identity : identity,
-                logindate : new Date()
+                logindate : newdate
             });
     user.save(function(err,res){
         if(err){
@@ -35,6 +58,7 @@ function insert(name,psw,email,academy,grade,identity){
         }
     })
 }
+
 
 /*註冊頁面數據接收*/
 app.post('/register', function (req, res) {
@@ -112,12 +136,21 @@ app.post('/login', function (req, res, next) {
 /*插入數據函數*/
 function insertpay(sender,receiver,cost,message){
     //數據格式
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+    var hour = dateObj.getHours()   
+    var minute =dateObj.getMinutes() 
+
+    var newdate = year + "/" + month + "/" + day + ' '+ hour +":"+ minute;
+    console.log(newdate)
     var pay =  new PaySchema({
                 sender : sender,
                 receiver : receiver,
                 cost : cost,
                 message : message,
-                paydate : new Date()
+                paydate : newdate
             });
     pay.save(function(err,res){
         if(err){
@@ -128,6 +161,20 @@ function insertpay(sender,receiver,cost,message){
         }
     })
 }
+app.get('/pay',function(req,res){
+    res.setHeader('Content-type','application/json;charset=utf-8')
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.header("X-Powered-By",' 3.2.1')
+    // var user = req.body.user;
+    PaySchema.find({'sender':"Ginger"},function(err,data){
+        var data_send = data
+        console.log(data_send[0])
+        res.send(JSON.stringify(data_send))
+    })
+
+})
 /*轉帳頁面數據接收*/
 app.post('/pay', function (req, res) {
   //處理跨域的問題
@@ -155,15 +202,8 @@ app.post('/pay', function (req, res) {
 
   });
 
-app.get('/', function (req, res) {
-    res.send('Hello World!');
-  });
 
-  var server = app.listen(process.env.PORT || 1993, function() {
+var server = app.listen(process.env.PORT || 1993, function() {
     var port = server.address().port;
     console.log('server connect port :', port);
-  });
-
-// var server = app.listen(1993,function(){
-//     console.log('server connect');
-// })
+});

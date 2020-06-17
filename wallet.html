@@ -29,14 +29,6 @@
 			get_balance_by_user("http://3.87.137.58:8888/get_balance?user="+name)
 		</script>
 		
-		<script>
-			$(document).ready(function(){
-				$('#logout_button').click(function(){
-				console.log('remove')
-				sessionStorage.removeItem("key");
-				});
-			});
-		</script>
 
         <!-- mywallet -->
         <section id="two" class="wrapper style special">
@@ -54,8 +46,145 @@
                   <div class="feature feature2">
                       <p id="clickpay">條碼</p>
                   </div>          
-              </form>
+			  </form>
+			  <h3>近期交易紀錄</h3>
+			<!-- trans dib -->
+              <form class='trans_form'>
+			<!-- first  -->
+              <div class="transaction">
+                <div class="icon-type">
+                  <div class="icon"></div>
+                </div>
+                <div class="description">
+                  <div class="info">
+                    <h3 id="trans_sender" > </h3>
+                    <span id="trans_message"></span>
+
+                    -<span id="trans_time"></span>
+                  </div>
+                  <div class="info">
+                    <h3 id="trans_money"></h3>
+                    <span id='status'></span>
+                    
+                  </div>
+                </div>
+			  </div>
+			  <!-- second -->
+			  <div class="transaction">
+                <div class="icon-type">
+                  <div class="icon"></div>
+                </div>
+                <div class="description">
+                  <div class="info">
+                    <h3 id="trans_sender2" value=""> </h3>
+                    <span id="trans_message2"></span>
+
+                    -<span id="trans_time2"></span>
+                  </div>
+                  <div class="info">
+                    <h3 id="trans_money2"></h3>
+                    <span id='status'></span>
+                    
+                  </div>
+                </div>
+			  </div>
+			  <!-- third -->
+			  <div class="transaction">
+                <div class="icon-type">
+                  <div class="icon"></div>
+                </div>
+                <div class="description">
+                  <div class="info">
+                    <h3 id="trans_sender3" value=""> </h3>
+                    <span id="trans_message3"></span>
+
+                    -<span id="trans_time3"></span>
+                  </div>
+                  <div class="info">
+                    <h3 id="trans_money3"></h3>
+                    <span id='status'></span>
+                    
+                  </div>
+                </div>
+              </div>
+            </form>
             </div>
-        </section>
+		</section>
+		<script src="assets/js/jquery.min.js"></script>
+		<script>
+			$(document).ready(function(){
+				$('#logout_button').click(function(){
+				console.log('remove')
+				sessionStorage.removeItem("key");
+				});
+			});
+			$.ajax({
+					type: "get",
+					url: "http://localhost:1993/pay",
+					success: function(data){
+						console.log(data[1]);
+						var trans_data1 = data[0]
+						$('#trans_sender').text(trans_data1['sender'])
+						$('#trans_message').text(trans_data1['message'])
+						$('#trans_time').text(trans_data1['paydate']) 
+						var trans_data2 = data[1]
+						$('#trans_sender2').text(trans_data2['sender'])
+						$('#trans_message2').text(trans_data2['message'])
+						$('#trans_time2').text(trans_data2['paydate']) 
+						var trans_data3 = data[2]
+						$('#trans_sender3').text(trans_data3['sender'])
+						$('#trans_message3').text(trans_data3['message'])
+						$('#trans_time3').text(trans_data3['paydate']) 
+						if(trans_data1['cost']== ''){
+							$('#trans_money').text( '+ 1 東吳幣') 
+						}
+						else{
+							$('#trans_money').text( '+',trans_data1['cost'],'東吳幣')
+						}
+						if(trans_data2['cost']== ''){
+							$('#trans_money2').text( '+ 1 東吳幣') 
+						}
+						else{
+							$('#trans_money2').text( '+',trans_data2['cost'],'東吳幣')
+						}
+						if(trans_data3['cost']== ''){
+							$('#trans_money3').text( '+ 1 東吳幣') 
+						}
+						else{
+							$('#trans_money3').text( '+',trans_data3['cost'],'東吳幣')
+						}
+						
+					},
+					error: function (error) {
+						alert("Cannot get data");
+					}
+			});	
+			
+		</script>
+		 <style>
+			.trans_form{
+			  width: 90%;
+			}
+			
+			.transaction {
+			display: flex;
+			flex-wrap: nowrap;
+			align-items: center;
+			padding: 20px 0;
+			}
+			.description {
+			  display: flex;
+			  justify-content: space-between;
+			  width: 100%;
+			  color: rgb(162, 161, 161);
+			}
+			.info h3{
+			  display: block;
+			  width: 100%;
+			  margin: 0 0 10px;
+			  color: rgb(72, 72, 72);
+			  font-size: 18px;
+			}
+		  </style>
 	</body>
 </html>

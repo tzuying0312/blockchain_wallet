@@ -9,7 +9,7 @@ var UserSchema = new Schema({
     academy : String,
     grade : String,
     identity : String,
-    logindate : Date,
+    logindate : String,
 })
 
 module.exports = mongoose.model('User',UserSchema);
