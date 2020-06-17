@@ -58,6 +58,13 @@
 			</div>
 		</section>
 		<script>
+			var name = sessionStorage.getItem("key");
+			if (name != 'null'){
+				alert("請先登出");
+				window.location.href="wallet.html";	
+			}
+		</script>
+		<script>
 		$(document).ready(function(){
 			if(localStorage.getItem('remember_me') == 'yes'){
 				console.log(localStorage.getItem('user_name'))
