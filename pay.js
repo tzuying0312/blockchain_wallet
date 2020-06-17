@@ -6,7 +6,7 @@ var PaySchema = new Schema({
     receiver : String,
     cost : String,
     message : String,
-    paydate : Date,
+    paydate : String,
 })
 
 module.exports = mongoose.model('Pay',PaySchema);
