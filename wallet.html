@@ -34,7 +34,7 @@
         <section id="two" class="wrapper style special">
             <div class="inner narrow">
                 <header>
-					<h2>目前金額</h2>
+					<h2 id="username"></h2>
 					<!-- <h4 id="show"></h4> -->
                     <div id="balance"></div>
                 </header>
@@ -102,8 +102,7 @@
                   </div>
                   <div class="info">
                     <h3 id="trans_money3"></h3>
-                    <span id='status'></span>
-                    
+                    <span id='status'></span>     
                   </div>
                 </div>
               </div>
@@ -119,6 +118,7 @@
 		</script>
 		<script src="assets/js/jquery.min.js"></script>
 		<script>
+			document.getElementById("username").innerHTML = sessionStorage.getItem("key");
 			$(document).ready(function(){
 				$('#logout_button').click(function(){
 				console.log('remove')
@@ -132,7 +132,7 @@
 					dataType: "json",
 					success: function(data){
 						for ( i=1 ; i < 4 ; i++ ){
-							console.log(i);
+							console.log(data[0]);
 							var trans_data = data.pop()
 							// $('#trans_sender'+i).text(trans_data['sender'])
 							$('#trans_message'+i).text(trans_data['message'])
