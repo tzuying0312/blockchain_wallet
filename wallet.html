@@ -120,9 +120,10 @@
 			});
 			$.ajax({
 					type: "get",
-					url: "http://localhost:1993/pay",
+					url: "http://localhost:1993/pay/"+sessionStorage.getItem("key"),
+					// url: "http://localhost:1993/pay",
+					dataType: "json",
 					success: function(data){
-						console.log(data[1]);
 						var trans_data1 = data[0]
 						$('#trans_sender').text(trans_data1['sender'])
 						$('#trans_message').text(trans_data1['message'])
@@ -136,22 +137,22 @@
 						$('#trans_message3').text(trans_data3['message'])
 						$('#trans_time3').text(trans_data3['paydate']) 
 						if(trans_data1['cost']== ''){
-							$('#trans_money').text( '+ 1 東吳幣') 
+							$('#trans_money').text('+ 1 東吳幣') 
 						}
 						else{
-							$('#trans_money').text( '+',trans_data1['cost'],'東吳幣')
+							$('#trans_money').text('+ '+trans_data1['cost']+' 東吳幣')
 						}
 						if(trans_data2['cost']== ''){
-							$('#trans_money2').text( '+ 1 東吳幣') 
+							$('#trans_money2').text('+ 1 東吳幣') 
 						}
 						else{
-							$('#trans_money2').text( '+',trans_data2['cost'],'東吳幣')
+							$('#trans_money2').text('+ '+trans_data1['cost']+' 東吳幣')
 						}
 						if(trans_data3['cost']== ''){
-							$('#trans_money3').text( '+ 1 東吳幣') 
+							$('#trans_money3').text('+ 1 東吳幣') 
 						}
 						else{
-							$('#trans_money3').text( '+',trans_data3['cost'],'東吳幣')
+							$('#trans_money3').text('+ '+trans_data1['cost']+' 東吳幣')
 						}
 						
 					},

@@ -161,19 +161,25 @@ function insertpay(sender,receiver,cost,message){
         }
     })
 }
-app.get('/pay',function(req,res){
+
+app.get('/pay/:user',function(req,res){
     res.setHeader('Content-type','application/json;charset=utf-8')
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
     res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
     res.header("X-Powered-By",' 3.2.1')
-    // var user = req.body.user;
-    PaySchema.find({'sender':"Ginger"},function(err,data){
-        var data_send = data
-        console.log(data_send[0])
-        res.send(JSON.stringify(data_send))
+    var updatestr = {'receiver': req.params.user};
+    PaySchema.find(updatestr, function(err, data){
+        if (err) {
+            console.log("Error:" + err);
+        }
+        else {
+            console.log(data)
+            var data_send = data
+            console.log(data_send[0])
+            res.send(JSON.stringify(data_send))
+        }
     })
-
 })
 /*轉帳頁面數據接收*/
 app.post('/pay', function (req, res) {
