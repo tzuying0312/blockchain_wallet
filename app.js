@@ -8,7 +8,8 @@ var mongoose = require('mongoose');
 
 
 //連接本地數據庫
-var DB_URL = 'mongodb://localhost:27017/wallet'
+// var DB_URL = 'mongodb://mdbadmin:<pas>@cluster0-shard-00-00-ek9e3.gcp.mongodb.net:27017,cluster0-shard-00-01-ek9e3.gcp.mongodb.net:27017,cluster0-shard-00-02-ek9e3.gcp.mongodb.net:27017/wallet?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority'
+DB_URL = 'mongodb://localhost:27017/wallet';
 mongoose.connect(DB_URL);
 
 
@@ -162,15 +163,15 @@ function insertpay(sender,receiver,cost,message){
     })
 }
 
-app.get('/pay/:user',function(req,res){
+app.get('/pay/inrecord/:user',function(req,res){
     res.setHeader('Content-type','application/json;charset=utf-8')
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
     res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
     res.header("X-Powered-By",' 3.2.1')
     var updatestra = {'receiver': req.params.user};
-    var updatestrb = {'sender': req.params.user};
-    PaySchema.find({$or:[updatestra,updatestrb]}, function(err, data){
+    // var updatestrb = {'sender': req.params.user};
+    PaySchema.find(updatestra, function(err, data){
         if (err) {
             console.log("Error:" + err);
         }
@@ -182,6 +183,51 @@ app.get('/pay/:user',function(req,res){
         }
     })
 })
+
+app.get('/pay/outrecord/:user',function(req,res){
+    res.setHeader('Content-type','application/json;charset=utf-8')
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.header("X-Powered-By",' 3.2.1')
+    // var updatestra = {'receiver': req.params.user};
+    var updatestrb = {'sender': req.params.user};
+    PaySchema.find(updatestrb, function(err, data){
+        if (err) {
+            console.log("Error:" + err);
+        }
+        else {
+            console.log(data)
+            var data_send = data
+            console.log(data_send[0])
+            res.send(JSON.stringify(data_send))
+        }
+    })
+})
+
+// setting get data
+app.get('/setting/:user',function(req,res){
+    res.setHeader('Content-type','application/json;charset=utf-8')
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.header("X-Powered-By",' 3.2.1')
+    var user_name =  req.params.user;
+    console.log(user_name)
+
+    userSchema.find({'username':user_name}, function(err, data){
+        if (err) {
+            console.log("Error:" + err);
+        }
+        else {
+            console.log(data)
+            var data_send = data
+            console.log(data_send[0])
+            res.send(JSON.stringify(data_send))
+        }
+    })
+})
+
 /*轉帳頁面數據接收*/
 app.post('/pay', function (req, res) {
   //處理跨域的問題

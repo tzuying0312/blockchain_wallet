@@ -12,7 +12,7 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
 	</head>
 	<body>
-  <header id="header" class="skel-layers-fixed">
+		<header id="header" class="skel-layers-fixed">
 			<nav id="nav">
 				<ul>
 					<li><a href="index.html">Home</a></li>
@@ -28,15 +28,13 @@
 			var name = sessionStorage.getItem("key");
 			get_balance_by_user("http://3.87.137.58:8888/get_balance?user="+name)
 		</script>
-		
 
         <!-- mywallet -->
         <section id="two" class="wrapper style special">
             <div class="inner narrow">
                 <header>
 					<h2 id="username"></h2>
-					<!-- <h4 id="show"></h4> -->
-                    <div id="balance"></div>
+                	<div id="balance"></div>
                 </header>
                 
                 <form class="grid-form" method="post" action="#">
@@ -46,68 +44,125 @@
                   <div class="feature feature2">
                       <p id="clickpay">條碼</p>
                   </div>          
-			  </form>
-			  <h3>近期交易紀錄</h3>
-			<!-- trans dib -->
-              <form class='trans_form'>
-			<!-- first  -->
-              <div class="transaction">
-                <div class="icon-type">
-                  <div class="icon"></div>
-                </div>
-                <div class="description">
-                  <div class="info">
-                    <h3 id="trans_sender1" > </h3>
-                    <span id="trans_message1"></span>
-
-                    -<span id="trans_time1"></span>
-                  </div>
-                  <div class="info">
-                    <h3 id="trans_money1"></h3>
-                    <span id='status'></span>
-                    
-                  </div>
-                </div>
-			  </div>
-			  <!-- second -->
-			  <div class="transaction">
-                <div class="icon-type">
-                  <div class="icon"></div>
-                </div>
-                <div class="description">
-                  <div class="info">
-                    <h3 id="trans_sender2" value=""> </h3>
-                    <span id="trans_message2"></span>
-
-                    -<span id="trans_time2"></span>
-                  </div>
-                  <div class="info">
-                    <h3 id="trans_money2"></h3>
-                    <span id='status'></span>
-                    
-                  </div>
-                </div>
-			  </div>
-			  <!-- third -->
-			  <div class="transaction">
-                <div class="icon-type">
-                  <div class="icon"></div>
-                </div>
-                <div class="description">
-                  <div class="info">
-                    <h3 id="trans_sender3" value=""> </h3>
-                    <span id="trans_message3"></span>
-
-                    -<span id="trans_time3"></span>
-                  </div>
-                  <div class="info">
-                    <h3 id="trans_money3"></h3>
-                    <span id='status'></span>     
-                  </div>
-                </div>
-              </div>
-            </form>
-            </div>
+			  	</form>
+				<h3 id='trans_tilte'>近期交易紀錄</h3>
+				<form class="grid-form" method="post" action="#">
+					<div class="feature feature2">
+						<p id="in">進帳</p>
+					</div>
+					<div class="feature feature2">
+						<p id="out">出帳</p>
+					</div>          
+				</form>
+				<!-- trans dib -->
+				<form class='trans_form' action="#" id="inrecord">
+					<!-- first  -->
+						<div class="transaction">
+							<div class="icon-type">
+								<div class="icon"></div>
+							</div>
+							<div class="description">
+								<div class="info">
+									<h3 id="trans_sender1" > </h3>
+									<span id="trans_message1"></span>
+									-<span id="trans_time1"></span>
+								</div>
+								<div class="info">
+									<h3 id="trans_money1"></h3>
+									<span id='status'></span>	
+								</div>
+							</div>
+					</div>
+					<!-- second -->
+					<div class="transaction">
+						<div class="icon-type">
+							<div class="icon"></div>
+						</div>
+						<div class="description">
+							<div class="info">
+								<h3 id="trans_sender2" > </h3>
+								<span id="trans_message2"></span>
+								-<span id="trans_time2"></span>
+							</div>
+							<div class="info">
+								<h3 id="trans_money2"></h3>
+								<span id='status'></span>	
+							</div>
+						</div>
+					</div>
+					<!-- third -->
+					<div class="transaction">
+						<div class="icon-type">
+							<div class="icon"></div>
+						</div>
+						<div class="description">
+							<div class="info">
+								<h3 id="trans_sender3" > </h3>
+								<span id="trans_message3"></span>
+								-<span id="trans_time3"></span>
+							</div>
+							<div class="info">
+								<h3 id="trans_money3"></h3>
+								<span id='status'></span>	
+							</div>
+						</div>
+					</div>
+				</form>
+				<!-- trans dib -->
+				<form style='display: none' class='trans_form' action="#" id="outrecord">
+					<!-- first  -->
+						<div class="transaction">
+							<div class="icon-type">
+								<div class="icon"></div>
+							</div>
+							<div class="description">
+								<div class="info">
+									<h3 id="trans_sender4" > </h3>
+									<span id="trans_message4"></span>
+									-<span id="trans_time4"></span>
+								</div>
+								<div class="info">
+									<h3 id="trans_money4"></h3>
+									<span id='status'></span>		
+								</div>
+							</div>
+					</div>
+					<!-- second -->
+					<div class="transaction">
+						<div class="icon-type">
+							<div class="icon"></div>
+						</div>
+						<div class="description">
+							<div class="info">
+								<h3 id="trans_sender5" > </h3>
+								<span id="trans_message5"></span>
+								-<span id="trans_time5"></span>
+							</div>
+							<div class="info">
+								<h3 id="trans_money5"></h3>
+								<span id='status'></span>
+							</div>
+						</div>
+					</div>
+					<!-- third -->
+					<div class="transaction">
+						<div class="icon-type">
+							<div class="icon"></div>
+						</div>
+						<div class="description">
+							<div class="info">
+								<h3 id="trans_sender6" > </h3>
+								<span id="trans_message6"></span>
+								-<span id="trans_time6"></span>
+							</div>
+							<div class="info">
+								<h3 id="trans_money6"></h3>
+								<span id='status'></span>	
+							</div>
+						</div>
+					</div>
+        		</form>
+        	</div>
 		</section>
 		<script>
 			var name = sessionStorage.getItem("key");
@@ -116,9 +171,22 @@
 				window.location.href="login.html";	
 			}
 		</script>
+		<script>
+			$(document).ready(function(){
+				$("#in").click(function(){
+					$("#inrecord").fadeIn();
+					$("#outrecord").fadeOut();
+				});
+				$("#out").click(function(){
+					$("#outrecord").fadeIn();
+					$("#inrecord").fadeOut();
+				});
+			});
+		</script>
 		<script src="assets/js/jquery.min.js"></script>
 		<script>
-			document.getElementById("username").innerHTML = sessionStorage.getItem("key");
+			// document.getElementById("username").innerHTML = sessionStorage.getItem("key");
+			$('#username').text('Hello,' + sessionStorage.getItem("key"))
 			$(document).ready(function(){
 				$('#logout_button').click(function(){
 				console.log('remove')
@@ -126,47 +194,72 @@
 				});
 			});
 			$.ajax({
-					type: "get",
-					url: "http://localhost:1993/pay/"+sessionStorage.getItem("key"),
-					// url: "http://localhost:1993/pay",
-					dataType: "json",
-					success: function(data){
+				type: "get",
+				url: "http://localhost:1993/pay/inrecord/"+sessionStorage.getItem("key"),
+				dataType: "json",
+				success: function(data){
+					if(data.length != 0){
 						for ( i=1 ; i < 4 ; i++ ){
-							console.log(data[0]);
 							var trans_data = data.pop()
 							// $('#trans_sender'+i).text(trans_data['sender'])
 							$('#trans_message'+i).text(trans_data['message'])
 							$('#trans_time'+i).text(trans_data['paydate']) 
-							if(trans_data['sender'] == sessionStorage.getItem("key")){
-								if(trans_data['cost']== ''){
-									$('#trans_sender'+i).text(trans_data['receiver'])
-									$('#trans_money'+i).text('- 1 東吳幣') 	
-								}
-								else{
-									$('#trans_money'+i).text('- '+trans_data['cost']+' 東吳幣')
-									$('#trans_sender'+i).text(trans_data['receiver'])
-								}
+							if(trans_data['cost']== ''){
+								$('#trans_sender'+i).text(trans_data['sender'])
+								$('#trans_money'+i).text('+ 1 東吳幣') 	
 							}
 							else{
-								if(trans_data['cost']== ''){
-									$('#trans_sender'+i).text(trans_data['sender'])
-									$('#trans_money'+i).text('+ 1 東吳幣') 	
-								}
-								else{
-									$('#trans_sender'+i).text(trans_data['sender'])
-									$('#trans_money'+i).text('+ '+trans_data['cost']+' 東吳幣')
-								}
-							}
-						}
-						
-					},
-					error: function (error) {
-						alert("Cannot get data");
+								$('#trans_sender'+i).text(trans_data['sender'])
+								$('#trans_money'+i).text('+ '+trans_data['cost']+' 東吳幣')
+							}		
+						};
 					}
-			});	
-			
+					else{
+						console.log('暫無交易資料')
+						$('#trans_tilte').text('暫無進帳交易資料')
+						document.getElementById('trans_tilte').style.color="red"
+					}
+					
+				},
+				error: function (error) {
+					alert("Cannot get data");
+				}
+			});
 		</script>
-		 <style>
+		<script>
+			$.ajax({
+				type: "get",
+				url: "http://localhost:1993/pay/outrecord/"+sessionStorage.getItem("key"),
+				dataType: "json",
+				success: function(data){
+					if(data.length != 0){
+						for ( i=1 ; i < 4 ; i++ ){
+							var trans_data = data.pop()
+							// $('#trans_sender'+i).text(trans_data['sender'])
+							$('#trans_message'+(i+3)).text(trans_data['message'])
+							$('#trans_time'+(i+3)).text(trans_data['paydate']) 
+							if(trans_data['cost']== ''){
+								$('#trans_sender'+(i+3)).text(trans_data['receiver'])
+								$('#trans_money'+(i+3)).text('- 1 東吳幣') 	
+							}
+							else{
+								$('#trans_money'+(i+3)).text('- '+trans_data['cost']+' 東吳幣')
+								$('#trans_sender'+(i+3)).text(trans_data['receiver'])
+							}
+						};	
+					}
+					else{
+						console.log('暫無交易資料')
+						$('#trans_tilte').text('暫無出帳交易資料')
+						document.getElementById('trans_tilte').style.color="red"
+					}
+				},
+				error: function (error) {
+					alert("Cannot get data");
+				}
+			});			
+		</script>
+		<style>
 			.trans_form{
 			  width: 90%;
 			}
@@ -190,39 +283,29 @@
 			  color: rgb(72, 72, 72);
 			  font-size: 18px;
 			}
-		  </style>
+		</style>
 	</body>
 </html>
 
 <!-- <script>
-var trans_data1 = data[0]
-$('#trans_sender').text(trans_data1['sender'])
-$('#trans_message').text(trans_data1['message'])
-$('#trans_time').text(trans_data1['paydate']) 
-var trans_data2 = data[1]
-$('#trans_sender2').text(trans_data2['sender'])
-$('#trans_message2').text(trans_data2['message'])
-$('#trans_time2').text(trans_data2['paydate']) 
-var trans_data3 = data[2]
-$('#trans_sender3').text(trans_data3['sender'])
-$('#trans_message3').text(trans_data3['message'])
-$('#trans_time3').text(trans_data3['paydate']) 
-if(trans_data1['cost']== ''){
-	$('#trans_money').text('+ 1 東吳幣') 
-}
-else{
-	$('#trans_money').text('+ '+trans_data1['cost']+' 東吳幣')
-}
-if(trans_data2['cost']== ''){
-	$('#trans_money2').text('+ 1 東吳幣') 
-}
-else{
-	$('#trans_money2').text('+ '+trans_data1['cost']+' 東吳幣')
-}
-if(trans_data3['cost']== ''){
-	$('#trans_money3').text('+ 1 東吳幣') 
-}
-else{
-	$('#trans_money3').text('+ '+trans_data1['cost']+' 東吳幣')
-}
-</script> -->
+	if(trans_data['sender'] == sessionStorage.getItem("key")){
+			if(trans_data['cost']== ''){
+				$('#trans_sender'+i).text(trans_data['receiver'])
+				$('#trans_money'+i).text('- 1 東吳幣') 	
+			}
+			else{
+				$('#trans_money'+i).text('- '+trans_data['cost']+' 東吳幣')
+				$('#trans_sender'+i).text(trans_data['receiver'])
+			}
+		}
+		else{
+			if(trans_data['cost']== ''){
+				$('#trans_sender'+i).text(trans_data['sender'])
+				$('#trans_money'+i).text('+ 1 東吳幣') 	
+			}
+			else{
+				$('#trans_sender'+i).text(trans_data['sender'])
+				$('#trans_money'+i).text('+ '+trans_data['cost']+' 東吳幣')
+			}
+		}
+</script>	 -->
