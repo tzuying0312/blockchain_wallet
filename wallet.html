@@ -12,7 +12,7 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
 	</head>
 	<body>
-		<header id="header" class="skel-layers-fixed">
+  		<header id="header" class="skel-layers-fixed">
 			<nav id="nav">
 				<ul>
 					<li><a href="index.html">Home</a></li>
@@ -28,13 +28,14 @@
 			var name = sessionStorage.getItem("key");
 			get_balance_by_user("http://3.87.137.58:8888/get_balance?user="+name)
 		</script>
-
+		
+	
         <!-- mywallet -->
-        <section id="two" class="wrapper style special">
+        <section id="card_one" class="wrapper style special">
             <div class="inner narrow">
                 <header>
 					<h2 id="username"></h2>
-                	<div id="balance"></div>
+                    <div id="balance"></div>
                 </header>
                 
                 <form class="grid-form" method="post" action="#">
@@ -45,8 +46,8 @@
                       <p id="clickpay">條碼</p>
                   </div>          
 			  	</form>
-				<h3 id='trans_tilte'>近期交易紀錄</h3>
-				<form class="grid-form" method="post" action="#">
+			  	<h3 id='trans_tilte'>近期交易紀錄</h3>
+			  	<form class="grid-form" method="post" action="#">
 					<div class="feature feature2">
 						<p id="in">進帳</p>
 					</div>
@@ -57,21 +58,21 @@
 				<!-- trans dib -->
 				<form class='trans_form' action="#" id="inrecord">
 					<!-- first  -->
-						<div class="transaction">
-							<div class="icon-type">
-								<div class="icon"></div>
+					<div class="transaction">
+						<div class="icon-type">
+							<div class="icon"></div>
+						</div>
+						<div class="description">
+							<div class="info">
+								<h3 id="trans_sender1" > </h3>
+								<span id="trans_message1"></span>
+								-<span id="trans_time1"></span>
 							</div>
-							<div class="description">
-								<div class="info">
-									<h3 id="trans_sender1" > </h3>
-									<span id="trans_message1"></span>
-									-<span id="trans_time1"></span>
-								</div>
-								<div class="info">
-									<h3 id="trans_money1"></h3>
-									<span id='status'></span>	
-								</div>
+							<div class="info">
+								<h3 id="trans_money1"></h3>
+								<span id='status'></span>	
 							</div>
+						</div>
 					</div>
 					<!-- second -->
 					<div class="transaction">
@@ -164,13 +165,12 @@
         		</form>
         	</div>
 		</section>
-		<script>
-			var name = sessionStorage.getItem("key");
-			if (name == 'null'){
-				alert("請先登入");
-				window.location.href="login.html";	
-			}
-		</script>
+
+		<script src="assets/js/jquery.min.js"></script>
+		<!-- <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script> -->
+        <!-- <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script> -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
+		
 		<script>
 			$(document).ready(function(){
 				$("#in").click(function(){
@@ -183,8 +183,12 @@
 				});
 			});
 		</script>
-		<script src="assets/js/jquery.min.js"></script>
-		<script>
+		<script> 
+			var name = sessionStorage.getItem("key");
+			if (name == 'null'){
+				alert("請先登入");
+				window.location.href="login.html";	
+			}
 			// document.getElementById("username").innerHTML = sessionStorage.getItem("key");
 			$('#username').text('Hello,' + sessionStorage.getItem("key"))
 			$(document).ready(function(){
@@ -257,13 +261,13 @@
 				error: function (error) {
 					alert("Cannot get data");
 				}
-			});			
+			});	
 		</script>
+
 		<style>
 			.trans_form{
 			  width: 90%;
 			}
-			
 			.transaction {
 			display: flex;
 			flex-wrap: nowrap;
@@ -284,28 +288,6 @@
 			  font-size: 18px;
 			}
 		</style>
+
 	</body>
 </html>
-
-<!-- <script>
-	if(trans_data['sender'] == sessionStorage.getItem("key")){
-			if(trans_data['cost']== ''){
-				$('#trans_sender'+i).text(trans_data['receiver'])
-				$('#trans_money'+i).text('- 1 東吳幣') 	
-			}
-			else{
-				$('#trans_money'+i).text('- '+trans_data['cost']+' 東吳幣')
-				$('#trans_sender'+i).text(trans_data['receiver'])
-			}
-		}
-		else{
-			if(trans_data['cost']== ''){
-				$('#trans_sender'+i).text(trans_data['sender'])
-				$('#trans_money'+i).text('+ 1 東吳幣') 	
-			}
-			else{
-				$('#trans_sender'+i).text(trans_data['sender'])
-				$('#trans_money'+i).text('+ '+trans_data['cost']+' 東吳幣')
-			}
-		}
-</script>	 -->
