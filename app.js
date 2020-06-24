@@ -3,6 +3,7 @@ var express = require('express');
 var app = express();
 var userSchema = require('./user');
 var PaySchema = require('./pay');
+var ForgotSchema = require('./forgot');
 var bodyParser = require('body-parser')
 var mongoose = require('mongoose');
 
@@ -143,7 +144,6 @@ function insertpay(sender,receiver,cost,message){
     var year = dateObj.getUTCFullYear();
     var hour = dateObj.getHours()   
     var minute =dateObj.getMinutes() 
-
     var newdate = year + "/" + month + "/" + day + ' '+ hour +":"+ minute;
     console.log(newdate)
     var pay =  new PaySchema({
@@ -255,6 +255,52 @@ app.post('/pay', function (req, res) {
 
   });
 
+/*插入數據函數*/
+function insertforgot(email){
+    //數據格式
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+    var hour = dateObj.getHours()   
+    var minute =dateObj.getMinutes() 
+    var newdate = year + "/" + month + "/" + day + ' '+ hour +":"+ minute;
+    console.log(newdate)
+    var forgot =  new ForgotSchema({
+                user_email : email,
+                application_date : newdate
+            });
+    forgot.save(function(err,res){
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log(res);
+        }
+    })
+}
+
+/*註冊頁面數據接收*/
+app.post('/forgot', function (req, res) {
+    //處理跨域的問題
+    res.setHeader('Content-type','application/json;charset=utf-8')
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.header("X-Powered-By",' 3.2.1')
+    //先查詢有沒有這個user
+    var user_email = req.body.email;
+    var updatestr = {user_email: user_email};
+    ForgotSchema.find(updatestr, function(err, obj){
+        if (err) {
+            console.log("Error:" + err);
+        }
+        else {
+            insertforgot(user_email); 
+            res.send({status:'success',message:true})
+        }
+    })
+});
 
 var server = app.listen(process.env.PORT || 1993, function() {
     var port = server.address().port;
