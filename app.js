@@ -4,6 +4,8 @@ var app = express();
 var userSchema = require('./user');
 var PaySchema = require('./pay');
 var ForgotSchema = require('./forgot');
+var ReserveSchema = require('./reserve');
+var ReviewSchema = require('./review');
 var bodyParser = require('body-parser')
 var mongoose = require('mongoose');
 
@@ -12,20 +14,6 @@ var mongoose = require('mongoose');
 // var DB_URL = 'mongodb://mdbadmin:<pas>@cluster0-shard-00-00-ek9e3.gcp.mongodb.net:27017,cluster0-shard-00-01-ek9e3.gcp.mongodb.net:27017,cluster0-shard-00-02-ek9e3.gcp.mongodb.net:27017/wallet?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority'
 DB_URL = 'mongodb://localhost:27017/wallet';
 mongoose.connect(DB_URL);
-
-
-// PaySchema.aggregate([
-//         { "$addFields": {
-//             "sentDateString": { 
-//                 '$paydate'
-//                 // "$paydate": { 
-//                 //     "format": "%Y-%m-%d", 
-//                 //     "date": "$paydate"
-//                 // } 
-//             }
-//         } }
-//     ])
-
 
 //解析表單數據
 app.use(bodyParser.urlencoded({extended:true}))
@@ -297,6 +285,130 @@ app.post('/forgot', function (req, res) {
         }
         else {
             insertforgot(user_email); 
+            res.send({status:'success',message:true})
+        }
+    })
+});
+
+
+/*插入數據函數*/
+function insertreserve(name,email,room,startDateTime,endDateTime,cancel){
+    //數據格式
+    var reserve =  new ReserveSchema({
+        name : name,
+        email : email,
+        room : room,
+        startDateTime : startDateTime,
+        endDateTime : endDateTime,
+        cancel : cancel
+     });
+    reserve.save(function(err,res){
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log(res);
+        }
+    })
+}
+
+app.get('/reserve/:room', function(req, res){
+    res.setHeader('Content-type','application/json;charset=utf-8')
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.header("X-Powered-By",' 3.2.1')
+    var room =  req.params.room;
+    var name = req.query.name;
+    var email =  req.query.email;
+    var startDateTime = req.query.start;
+    var endDateTime = req.query.end;
+    var cancel = req.query.cancel;
+    var updatestr = {startDateTime: startDateTime};
+    var NewArray = new Array();
+    var NewArray = room.split("m");
+    var all_room = ['雙溪D509-完成室','雙溪D509-未來室','雙溪D509-藍沙發','雙溪D509-現在室','城中5615'];
+    room = all_room[NewArray[1]-1];
+    ReserveSchema.find(updatestr, function(err, obj){
+        if (err) {
+            console.log("Error:" + err);
+        }
+        else {
+            insertreserve(name,email,room,startDateTime,endDateTime,cancel); 
+            res.send({status:'success',message:true})
+        }
+    })
+  });
+
+app.get('/res_rec/:user',function(req,res){
+    res.setHeader('Content-type','application/json;charset=utf-8')
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.header("X-Powered-By",' 3.2.1')
+    var updatestr = {'name': req.params.user};
+    // var updatestrb = {'sender': req.params.user};
+    ReserveSchema.find(updatestr, function(err, data){
+        if (err) {
+            console.log("Error:" + err);
+        }
+        else {
+            console.log(data)
+            var data_send = data
+            console.log(data_send[0])
+            res.send(JSON.stringify(data_send))
+        }
+    })
+})
+
+/*插入數據函數*/
+function insertreview(name,star,comment){
+    //數據格式
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+    var hour = dateObj.getHours()   
+    var minute =dateObj.getMinutes() 
+
+    var newdate = year + "/" + month + "/" + day + ' '+ hour +":"+ minute;
+    console.log(newdate)
+    var review =  new ReviewSchema({
+                name : name,
+                star : star,
+                comment :comment,
+                reviewdate : newdate
+            });
+    review.save(function(err,res){
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log(res);
+        }
+    })
+}
+
+
+/*註冊頁面數據接收*/
+app.post('/review', function (req, res) {
+  //處理跨域的問題
+  res.setHeader('Content-type','application/json;charset=utf-8')
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
+  res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+  res.header("X-Powered-By",' 3.2.1')
+  //先查詢有沒有這個user
+  var name = req.body.name;
+  var star = req.body.star;
+  var comment = req.body.comment;
+  var updatestr = {name: name};
+  ReviewSchema.find(updatestr, function(err, obj){
+        if (err) {
+            console.log("Error:" + err);
+        }
+        else {
+            insertreview(name,star,comment);
             res.send({status:'success',message:true})
         }
     })

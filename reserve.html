@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>reserve</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<script src="js/jquery.min.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/skel-layers.min.js"></script>
+		<script src="js/init.js"></script>
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body id="top">
+		<header id="header" class="skel-layers-fixed">
+			<nav id="nav">
+				<ul>
+					<li><a href="index.html">Home</a></li>
+					<li><a href="wallet.html">My_wallet</a></li>
+					<li><a href="pay.html">GOPAY</a></li>
+					<li><a href="reserve.html">Reserve</a></li>
+					<li><a href="login.html">Login</a></li>
+					<li ><a href="login.html" id="logout_button">Logout</a></li>
+				</ul>
+			</nav>
+		</header>
+		<section id="two" class="wrapper style2 special">
+			<div class="inner narrow">
+				<header>
+					<h2>預約空間</h2>
+                </header>
+                <div class="inner narrow">
+					<a href='res_rec.html' class="button">查詢預約紀錄</a>
+					<a href='#reserve' class="button">預約教室/學習空間</a>
+                    <!-- <input href="#" type='button' name='submit' value='預約教室/學習空間' class="form-control" /> -->
+                </div>
+			</div>
+			<hr class="major" />
+			<div class="row" id="reserve">
+				<div class="6u">
+					<section class="special">
+						<a href="#" class="image fit"><img src="images/3.jpg" alt="" /></a>
+						<h3>雙溪D棟/城中校區學習進行室</h3>
+						<ul class="actions">
+							<li>
+								<!-- <a href="#" class="button alt">立即預約</a> -->
+							<div class="form-group">
+								<!-- <select onchange="window.open(this.options[this.selectedIndex].value)"> -->
+								<select onchange="location.href=this.options[this.selectedIndex].value">
+									<option hidden>-----------立即預約▾-----------</option>
+									<option value="https://booking-room1.youcanbook.me/">雙溪D509-完成室(限2-4人可預約)</option>
+									<option value="https://booking-room2.youcanbook.me/">雙溪D509-未來室(限4-8人可預約)</option>
+								</select>
+							</div>
+							</li>
+						</ul>
+					</section>
+				</div>
+				<div class="6u">
+					<section class="special">
+						<a href="#" class="image fit"><img src="images/2.jpg" alt="" /></a>
+						<h3>自習室</h3>
+						<ul class="actions">
+							<li><a href="#" class="button alt">立即預約</a></li>
+						</ul>
+					</section>
+				</div>
+			</div>
+		</section>
+		<script>	
+			var name = sessionStorage.getItem("key");
+			if (name == 'null'){
+				alert("請先登入");
+				window.location.href="login.html";	
+			}
+			$(document).ready(function(){
+				$('#logout_button').click(function(){
+				console.log('remove')
+				sessionStorage.removeItem("key");
+				});
+			});
+		</script>
+	</body>
+</html>
+
+
+

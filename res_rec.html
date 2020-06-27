@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>res_rec</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/skel-layers.min.js"></script>
+		<script src="js/init.js"></script>
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body>
+		<header id="header" class="skel-layers-fixed">
+			<nav id="nav">
+				<ul>
+					<li><a href="index.html">Home</a></li>
+					<li><a href="wallet.html">My_wallet</a></li>
+                    <li><a href="pay.html">GOPAY</a></li>
+                    <li><a href="reserve.html">Reserve</a></li>
+					<li><a href="login.html">Login</a></li>
+					<li><a href="login.html" id="logout_button">Logout</a></li>
+				</ul>
+			</nav>
+		</header>
+        <!-- mywallet -->
+        <section  class="wrapper style special">
+            <div class="inner narrow">
+                <header>
+					<h2 id="username"></h2>
+                </header>
+
+			  	<h3 id='res_tilte'>預約紀錄</h3>
+				<!-- trans dib -->
+				<form class='res_form' action="#" id="record">
+					<!-- first  -->
+					<div class="reservation">
+						<div class="icon-type">
+							<div class="icon"></div>
+						</div>
+						<div class="description">
+                            <h3 id="room"> </h3>
+                            <span id="startDateTime"></span>
+							-<span id="endDateTime"></span>				 
+						</div>
+					</div>				
+				</form>		
+			</div>		
+		</section>
+		
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
+		<script> 
+			var name = sessionStorage.getItem("key");
+			if (name == 'null'){
+				alert("請先登入");
+				window.location.href="login.html";	
+			}
+			// document.getElementById("username").innerHTML = sessionStorage.getItem("key");
+			$('#username').text('Hello,' + sessionStorage.getItem("key"))
+			$(document).ready(function(){
+				$('#logout_button').click(function(){
+				console.log('remove')
+				sessionStorage.removeItem("key");
+				});
+			});
+			$.ajax({
+				type: "get",
+				url: "http://localhost:1993/res_rec/"+sessionStorage.getItem("key"),
+				dataType: "json",
+				success: function(data){
+					if(data.length != 0){
+						for ( i=0 ; i < data.length ; i++ ){
+                            document.getElementById("room").innerHTML +=  data[i]['room']+ "<br/>"+"<br/>"
+                            document.getElementById("startDateTime").innerHTML +=  data[i]['startDateTime']+ "<br/>"+"<br/>"
+                            document.getElementById("endDateTime").innerHTML +=  data[i]['endDateTime']+ "<br/>"+"<br/>"
+							// document.getElementById("review").innerHTML +=  data[i]['review']+ "<br/>"+"<br/>"
+						};
+					}
+					else{
+						console.log('暫無預約紀錄')
+						$('#res_tilte').text('暫無預約紀錄')
+						document.getElementById('res_tilte').style.color="red"
+					}
+					
+				},
+				error: function (error) {
+					alert("Cannot get data");
+				}
+			});
+		</script>
+
+		<style>
+			.description {
+			  display: flex;
+			  justify-content: space-between;
+			  width: 100%;
+			  color: rgb(162, 161, 161);
+			}
+			.info h3{
+			  display: block;
+			  width: 100%;
+			  margin: 0 0 10px;
+			  color: rgb(72, 72, 72);
+			  font-size: 18px;
+			}
+		</style>
+	</body>
+</html>

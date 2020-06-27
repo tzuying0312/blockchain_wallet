@@ -1,0 +1,239 @@
+<head>
+  <title>res_rec</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<form class="rating-wrapper">
+  <label class="rating-label">SCU_COIN REVIEW
+    <div class="ratingItemList">
+      <div class="rate">
+        <input type="radio" id="star5" name="rate" value="5" />
+        <label for="star5" title="5">5 stars</label>
+        <input type="radio" id="star4" name="rate" value="4" />
+        <label for="star4" title="4">4 stars</label>
+        <input type="radio" id="star3" name="rate" value="3" />
+        <label for="star3" title="3">3 stars</label>
+        <input type="radio" id="star2" name="rate" value="2" />
+        <label for="star2" title="2">2 stars</label>
+        <input type="radio" id="star1" name="rate" value="1" />
+        <label for="star1" title="1">1 star</label>
+      </div>
+    </div>
+  </label>
+  <form>
+    <div class="feedback">
+    <input type="text" id="name" placeholder="name" required/>
+    <textarea placeholder="What can we do to improve?"></textarea>
+    <input id="submit" type='button' name='submit' value='Send Your Feedback' />
+    </div>  
+  </form>
+</form> 
+
+<script>
+  // Display feedback after rating 
+  $('.rate').on('click', function() {
+    $('.feedback').css('display', "block");
+  });
+</script>
+
+<script>
+  $(document).ready(function(){
+    $('input:radio').change(
+      function(){ 
+        var star = this.value; 
+        $("#submit").click(function(){
+          const name = document.getElementById("name").value;
+          var comment = $('textarea').val()
+          if (name != '') {
+            $.ajax({
+              type: "post",
+              url: "http://localhost:1993/review",
+              dataType: "json",
+              data:{ name:name,comment:comment,star:star},
+              success: function(data){
+                //接受返回的数据，前端判断采取的动作
+                console.log(data);
+                if(data){
+                  if(data.message == false){
+                    alert('錯誤');
+                  }
+                  else{
+                    alert('謝謝您的建議');
+                    window.location.href="wallet.html";	
+                  }
+                }
+              },
+              error: function (error) {
+                alert("No connection");
+              }
+            });
+          }
+          else{
+            alert("要填寫name哦~~~")
+          }
+        });
+      }
+    ); 
+  });
+</script>
+
+<style>
+  @import url("https://fonts.googleapis.com/css?family=Lato:400,700");
+  body {
+    font-family: 'Lato', Arial, sans-serif;
+    font-size: 18px;
+    background: #edf0f5;
+    color: #202125;
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .rating-wrapper {
+    max-width: 400px;
+    margin: 80px auto;
+    background: #fff;
+    padding: 1em;
+    border-radius: 3px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  .rating-wrapper .rating-label {
+    text-align: center;
+    font-weight: 700;
+    display: block;
+  }
+  .rating-wrapper .ratingItemList {
+    max-width: 300px;
+    margin: auto;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-pack: justify;
+            justify-content: space-between;
+    padding: 1em 0;
+  }
+  .rating-wrapper input.rating {
+    display: none;
+  }
+  .rating-wrapper label.rating {
+    padding: 5px 3px;
+    font-size: 32px;
+    opacity: .7;
+    -webkit-filter: grayscale(1);
+            filter: grayscale(1);
+    cursor: pointer;
+  }
+  .rating-wrapper label.rating:hover {
+    -webkit-filter: grayscale(0.84);
+            filter: grayscale(0.84);
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+    -webkit-transition: 100ms ease;
+    transition: 100ms ease;
+  }
+  .rating-wrapper input.rating:checked + label.rating {
+    -webkit-filter: grayscale(0);
+            filter: grayscale(0);
+    opacity: 1;
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+  }
+
+  .feedback {
+    width: 100%;
+    display: none;
+  }
+  .feedback textarea, .feedback input {
+    max-width: 300px;
+    width: 100%;
+    display: block;
+    margin: .5em auto;
+    padding: .5em;
+    font-family: 'Lato', sans-serif;
+    border: 1px solid #d2d3d8;
+    border-radius: 3px;
+  }
+  .feedback textarea:focus, .feedback textarea:active, .feedback input:focus, .feedback input:active {
+    border-color: #3870c4;
+    box-shadow: 0px 0px 1px 1px #3870c4;
+    -webkit-transition: 100ms;
+    transition: 100ms;
+  }
+  .feedback textarea {
+    height: 100px;
+  }
+  .feedback button {
+    margin: 1em auto;
+    display: table;
+    text-align: center;
+  }
+
+  .disputelab_logo {
+    width: 140px;
+    position: absolute;
+    top: 1em;
+    left: 50%;
+    margin-left: -70px;
+  }
+
+  button {
+    color: #edeef0;
+    background-color: #9b9ea9;
+    border-radius: 3px;
+    font-family: 'Lato', Arial sans-serif;
+    border: 0;
+    padding: 9px 15px;
+    font-size: 15px;
+  }
+
+  button.not-disabled {
+    color: white;
+    background-color: #3870c4;
+    text-shadow: 0px 1px 1px #214375;
+    cursor: pointer;
+  }
+  button.not-disabled:hover {
+    background-color: #2d599c;
+    -webkit-transition: 100ms;
+    transition: 100ms;
+  }
+  .rate {
+      float: left;
+      height: 46px;
+      width: 220px;
+      padding: 0 10px;
+  }
+  .rate:not(:checked) > input {
+      position:absolute;
+      top:-9999px;
+  }
+  .rate:not(:checked) > label {
+      float:right;
+      width:1em;
+      overflow:hidden;
+      white-space:nowrap;
+      cursor:pointer;
+      font-size:30px;
+      color:#ccc;
+  }
+  .rate:not(:checked) > label:before {
+      content: '★ ';
+  }
+  .rate > input:checked ~ label {
+      color: orange;    
+  }
+  .rate:not(:checked) > label:hover,
+  .rate:not(:checked) > label:hover ~ label {
+      color: green;  
+  }
+  .rate > input:checked + label:hover,
+  .rate > input:checked + label:hover ~ label,
+  .rate > input:checked ~ label:hover,
+  .rate > input:checked ~ label:hover ~ label,
+  .rate > label:hover ~ input:checked ~ label {
+      color: blue;
+  }
+</style>
