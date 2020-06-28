@@ -292,14 +292,12 @@ app.post('/forgot', function (req, res) {
 
 
 /*插入數據函數*/
-function insertreserve(name,email,room,startDateTime,endDateTime,cancel){
+function insertreserve(name,room,startDateTime,cancel){
     //數據格式
     var reserve =  new ReserveSchema({
         name : name,
-        email : email,
         room : room,
         startDateTime : startDateTime,
-        endDateTime : endDateTime,
         cancel : cancel
      });
     reserve.save(function(err,res){
@@ -320,21 +318,22 @@ app.get('/reserve/:room', function(req, res){
     res.header("X-Powered-By",' 3.2.1')
     var room =  req.params.room;
     var name = req.query.name;
-    var email =  req.query.email;
     var startDateTime = req.query.start;
-    var endDateTime = req.query.end;
     var cancel = req.query.cancel;
-    var updatestr = {startDateTime: startDateTime};
     var NewArray = new Array();
     var NewArray = room.split("m");
     var all_room = ['雙溪D509-完成室','雙溪D509-未來室','雙溪D509-藍沙發','雙溪D509-現在室','城中5615'];
     room = all_room[NewArray[1]-1];
+    var timeArray = new Array();
+    var timeArray = startDateTime.split("(");
+    startDateTime = timeArray[0];
+    var updatestr = {startDateTime: startDateTime};
     ReserveSchema.find(updatestr, function(err, obj){
         if (err) {
             console.log("Error:" + err);
         }
         else {
-            insertreserve(name,email,room,startDateTime,endDateTime,cancel); 
+            insertreserve(name,room,startDateTime,cancel); 
             res.send({status:'success',message:true})
         }
     })
@@ -347,15 +346,13 @@ app.get('/res_rec/:user',function(req,res){
     res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
     res.header("X-Powered-By",' 3.2.1')
     var updatestr = {'name': req.params.user};
-    // var updatestrb = {'sender': req.params.user};
-    ReserveSchema.find(updatestr, function(err, data){
+    ReserveSchema.find(updatestr, null, {sort: {startDateTime: -1}},function(err, data){
         if (err) {
             console.log("Error:" + err);
         }
         else {
             console.log(data)
             var data_send = data
-            console.log(data_send[0])
             res.send(JSON.stringify(data_send))
         }
     })

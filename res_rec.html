@@ -40,9 +40,9 @@
 							<div class="icon"></div>
 						</div>
 						<div class="description">
-                            <h3 id="room"> </h3>
-                            <span id="startDateTime"></span>
-							-<span id="endDateTime"></span>				 
+							<span id="room"> </span> &nbsp&nbsp&nbsp&nbsp&nbsp
+							<span id="startDateTime"></span>
+							<!-- <span id="endDateTime"></span>				  -->
 						</div>
 					</div>				
 				</form>		
@@ -74,8 +74,6 @@
 						for ( i=0 ; i < data.length ; i++ ){
                             document.getElementById("room").innerHTML +=  data[i]['room']+ "<br/>"+"<br/>"
                             document.getElementById("startDateTime").innerHTML +=  data[i]['startDateTime']+ "<br/>"+"<br/>"
-                            document.getElementById("endDateTime").innerHTML +=  data[i]['endDateTime']+ "<br/>"+"<br/>"
-							// document.getElementById("review").innerHTML +=  data[i]['review']+ "<br/>"+"<br/>"
 						};
 					}
 					else{
@@ -94,7 +92,7 @@
 		<style>
 			.description {
 			  display: flex;
-			  justify-content: space-between;
+			  justify-content: center;
 			  width: 100%;
 			  color: rgb(162, 161, 161);
 			}

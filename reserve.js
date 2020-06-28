@@ -4,10 +4,8 @@ Schema = mongoose.Schema;
 
 var ReserveSchema = new Schema({
     name : String,
-    email : String,
     room : String,
     startDateTime : String,
-    endDateTime : String,
     cancel :String,
 })
 
