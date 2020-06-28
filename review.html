@@ -23,7 +23,7 @@
   </label>
   <form>
     <div class="feedback">
-    <input type="text" id="name" placeholder="name" required/>
+    name: <input type="text" id="name" value="" disabled="disabled">
     <textarea placeholder="What can we do to improve?"></textarea>
     <input id="submit" type='button' name='submit' value='Send Your Feedback' />
     </div>  
@@ -39,39 +39,36 @@
 
 <script>
   $(document).ready(function(){
+    var name = sessionStorage.getItem("key");
+		document.getElementById("name").value = name;
     $('input:radio').change(
       function(){ 
         var star = this.value; 
         $("#submit").click(function(){
           const name = document.getElementById("name").value;
-          var comment = $('textarea').val()
-          if (name != '') {
-            $.ajax({
-              type: "post",
-              url: "http://localhost:1993/review",
-              dataType: "json",
-              data:{ name:name,comment:comment,star:star},
-              success: function(data){
-                //接受返回的数据，前端判断采取的动作
-                console.log(data);
-                if(data){
-                  if(data.message == false){
-                    alert('錯誤');
-                  }
-                  else{
-                    alert('謝謝您的建議');
-                    window.location.href="wallet.html";	
-                  }
+          var comment = $('textarea').val()         
+          $.ajax({
+            type: "post",
+            url: "http://localhost:1993/review",
+            dataType: "json",
+            data:{ name:name,comment:comment,star:star},
+            success: function(data){
+              //接受返回的数据，前端判断采取的动作
+              console.log(data);
+              if(data){
+                if(data.message == false){
+                  alert('錯誤');
                 }
-              },
-              error: function (error) {
-                alert("No connection");
+                else{
+                  alert('謝謝您的建議');
+                  window.location.href="wallet.html";	
+                }
               }
-            });
-          }
-          else{
-            alert("要填寫name哦~~~")
-          }
+            },
+            error: function (error) {
+              alert("No connection");
+            }
+          }); 
         });
       }
     ); 
