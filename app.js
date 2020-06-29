@@ -1,19 +1,29 @@
 
 var express = require('express');
 var app = express();
-var userSchema = require('./user');
-var PaySchema = require('./pay');
-var ForgotSchema = require('./forgot');
-var ReserveSchema = require('./reserve');
-var ReviewSchema = require('./review');
+var userSchema = require('./routes/user');
+var PaySchema = require('./routes/pay');
+var CourseshareSchema = require('./routes/course_share');
+var ForgotSchema = require('./routes/forgot');
+var ReserveSchema = require('./routes/reserve');
+var ReviewSchema = require('./routes/review');
 var bodyParser = require('body-parser')
 var mongoose = require('mongoose');
 
 
 //連接本地數據庫
-// var DB_URL = 'mongodb://mdbadmin:<pas>@cluster0-shard-00-00-ek9e3.gcp.mongodb.net:27017,cluster0-shard-00-01-ek9e3.gcp.mongodb.net:27017,cluster0-shard-00-02-ek9e3.gcp.mongodb.net:27017/wallet?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority'
-DB_URL = 'mongodb://localhost:27017/wallet';
+var DB_URL = 'mongodb://localhost:27017/wallet'
+// var DB_URL = 'mongodb+srv://gingerfan:ginger94090@cluster0-zigdt.gcp.mongodb.net/mywallet?retryWrites=true&w=majority'
 mongoose.connect(DB_URL);
+
+app.use(function (req, res, next) {
+    res.setHeader('Content-type','application/json;charset=utf-8')
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.header("X-Powered-By",' 3.2.1')
+    next();
+  });
 
 //解析表單數據
 app.use(bodyParser.urlencoded({extended:true}))
@@ -52,12 +62,6 @@ function insert(name,psw,email,academy,grade,identity){
 
 /*註冊頁面數據接收*/
 app.post('/register', function (req, res) {
-  //處理跨域的問題
-  res.setHeader('Content-type','application/json;charset=utf-8')
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
-  res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
-  res.header("X-Powered-By",' 3.2.1')
   //先查詢有沒有這個user
   var UserName = req.body.username;
   var UserPsw = req.body.password;
@@ -100,12 +104,6 @@ app.post('/login', function (req, res, next) {
   //通过账号密码搜索验证
   var updatestr = {username: UserName,userpsw:UserPsw};
   //處理跨域問題
-    res.setHeader('Content-type','application/json;charset=utf-8')
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
-    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
-    res.header("X-Powered-By",' 3.2.1')
-    
     userSchema.find(updatestr, function(err, obj){
         if (err) {
             console.log("Error:" + err);
@@ -122,6 +120,23 @@ app.post('/login', function (req, res, next) {
     })
 });
 
+// setting get data
+app.get('/setting/:user',function(req,res){
+    var user_name =  req.params.user;
+    console.log(user_name)
+
+    userSchema.find({'username':user_name}, function(err, data){
+        if (err) {
+            console.log("Error:" + err);
+        }
+        else {
+            console.log(data)
+            var data_send = data
+            console.log(data_send[0])
+            res.send(JSON.stringify(data_send))
+        }
+    })
+})
 
 /*插入數據函數*/
 function insertpay(sender,receiver,cost,message){
@@ -132,6 +147,7 @@ function insertpay(sender,receiver,cost,message){
     var year = dateObj.getUTCFullYear();
     var hour = dateObj.getHours()   
     var minute =dateObj.getMinutes() 
+
     var newdate = year + "/" + month + "/" + day + ' '+ hour +":"+ minute;
     console.log(newdate)
     var pay =  new PaySchema({
@@ -150,13 +166,7 @@ function insertpay(sender,receiver,cost,message){
         }
     })
 }
-
 app.get('/pay/inrecord/:user',function(req,res){
-    res.setHeader('Content-type','application/json;charset=utf-8')
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
-    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
-    res.header("X-Powered-By",' 3.2.1')
     var updatestra = {'receiver': req.params.user};
     // var updatestrb = {'sender': req.params.user};
     PaySchema.find(updatestra, function(err, data){
@@ -173,12 +183,6 @@ app.get('/pay/inrecord/:user',function(req,res){
 })
 
 app.get('/pay/outrecord/:user',function(req,res){
-    res.setHeader('Content-type','application/json;charset=utf-8')
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
-    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
-    res.header("X-Powered-By",' 3.2.1')
-    // var updatestra = {'receiver': req.params.user};
     var updatestrb = {'sender': req.params.user};
     PaySchema.find(updatestrb, function(err, data){
         if (err) {
@@ -193,28 +197,68 @@ app.get('/pay/outrecord/:user',function(req,res){
     })
 })
 
-// setting get data
-app.get('/setting/:user',function(req,res){
-    res.setHeader('Content-type','application/json;charset=utf-8')
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
-    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
-    res.header("X-Powered-By",' 3.2.1')
-    var user_name =  req.params.user;
-    console.log(user_name)
-
-    userSchema.find({'username':user_name}, function(err, data){
-        if (err) {
-            console.log("Error:" + err);
-        }
-        else {
-            console.log(data)
+app.get('/course_share',function(req,res){
+    console.log('hihi')
+    CourseshareSchema.find({}, function(err, data) {
+        if (!err) { 
+            console.log(data);
             var data_send = data
             console.log(data_send[0])
             res.send(JSON.stringify(data_send))
+          
+        }
+        else {
+            throw err;
+        }
+    });
+});
+
+app.post('/course_share',function(req,res){
+
+    var write_user = req.body.write_user;
+    var course_name = req.body.course_name;
+    var course_teacher = req.body.course_teacher;
+    var course_message = req.body.course_message;
+    var department = req.body.department;
+    var grade = req.body.grade;
+    var rating =req.body.rating;
+    var diffcult = req.body.diffcult;
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+    var hour = dateObj.getHours()   
+    var minute =dateObj.getMinutes() 
+
+    var newdate = year + "/" + month + "/" + day + ' '+ hour +":"+ minute;
+    console.log(newdate)
+
+    var courseshare =  new CourseshareSchema({
+        write_user : write_user,
+        course_name: course_name, 
+        course_teacher: course_teacher, 
+        course_message:course_message, 
+        department:department, 
+        grade:grade,
+        sharedate: newdate,
+        rating:rating,
+        diffcult:diffcult,
+    });
+    console.log(courseshare)
+    courseshare.save(function(err,res){
+        if(err){
+            console.log(err);
+
+        }
+        else{
+            console.log(res);
+            // res.send({status:'success',message:true})
         }
     })
-})
+    res.send({status:'success',message:true})
+
+
+});
 
 /*轉帳頁面數據接收*/
 app.post('/pay', function (req, res) {
@@ -411,7 +455,7 @@ app.post('/review', function (req, res) {
     })
 });
 
-var server = app.listen(process.env.PORT || 1993, function() {
-    var port = server.address().port;
-    console.log('server connect port :', port);
-});
+app.listen(1993, () =>console.log('Example app listening on port 3000!'))
+
+
+

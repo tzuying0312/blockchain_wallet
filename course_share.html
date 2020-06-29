@@ -1,0 +1,193 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>register</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="js/get_current_user.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/skel-layers.min.js"></script>
+		<script src="js/init.js"></script>
+		<link rel="stylesheet" href="assets/css/main.css" />	</head>
+	<body id="top">
+		<header id="header" class="skel-layers-fixed">
+			<nav id="nav">
+				<ul>
+					<li><a href="index.html">Home</a></li>
+					<li><a href="wallet.html">My_wallet</a></li>
+					<li><a href="pay.html">GOPAY</a></li>
+					<li><a href="login.html">Login</a></li>
+					<li><a href="course.html" >課程專區</a></li>
+
+					<li><a href="login.html" id="logout_button">Logout</a></li>
+				</ul>
+			</nav>
+		</header>
+		<section id="two" class="wrapper style2 special">
+
+            <div id='share_div'  class="inner narrow">
+                <header>
+					<h2>分享課程內容</h2>
+                </header>
+                <form class="grid-form" id='share' action="#">
+                    <!-- style='display: none' -->
+                        <div class="form-group">
+                            <label for="message">學系/科目類別</label>
+                            <select id = 'department'>
+                                <option  hidden>請選擇科目類別▾</option>
+                                <option value="1111中國文學系">中國文學系</option>
+                                    <option value="1212歷史學系">歷史學系</option>
+                                    <option value="1313哲學系">哲學系</option>
+                                    <option value="1414政治學系">政治學系</option>
+                                    <option value="1515社會學系">社會學系</option>
+                                    <option value="1616社會工作學系">社會工作學系</option>
+                                    <option value="1717音樂學系">音樂學系</option>
+                                    <option value="2121英文學系">英文學系</option>
+                                    <option value="2222日本語文學系">日本語文學系</option>
+                                    <option value="2323德國文化學系">德國文化學系</option>
+                                    <option value="3131數學系">數學系</option>
+                                    <option value="3232物理學系">物理學系</option>
+                                    <option value="3333化學系">化學系</option>
+                                    <option value="3434微生物學系">微生物學系</option>
+                                    <option value="3535心理學系">心理學系</option>
+                                    <option value="4141法律學系">法律學系</option>
+                                    <option value="5050商學院">商學院</option>
+                                    <option value="5151經濟學系">經濟學系</option>
+                                    <option value="5252會計學系">會計學系</option>
+                                    <option value="5353企業管理學系">企業管理學系</option>
+                                    <option value="5454國際經營與貿易學系">國際經營與貿易學系</option>
+                                    <option value="5555財務工程與精算數學系">財務工程與精算數學系</option>
+                                    <option value="5656資訊管理學系">資訊管理學系</option>
+                                    <option value="7070巨量資料管理學院學士學位學程">巨量資料管理學院學士學位學程</option>
+                                    <option value="6161科技管理學程">科技管理學程</option>
+                                    <option value="6262財務金融學程">財務金融學程</option>
+                                    <option value="6464人權學程">人權學程</option>
+                                    <option value="6565綠色科學與永續發展學程">綠色科學與永續發展學程</option>
+                                    <option value="6767鑑識學程">鑑識學程</option>
+                                    <option value="6868實用英語學程">實用英語學程</option>
+                                    <option value="6969創意人文學程">創意人文學程</option>
+                                    <option value="6A71非營利組織管理學程">非營利組織管理學程</option>
+                                    <option value="6B72量資料分析學分學程">巨量資料分析學分學程</option>
+                                    <option value="6C73金融科技學程">金融科技學程</option>
+                                    <option value="6D74國貿管理全英語學程">國貿管理全英語學程</option>
+                                    <option value="6E75財經全英語學程">財經全英語學程</option>
+                                    <option value="6E76東亞人文社會研究全英語學程">東亞人文社會研究全英語學程</option>
+                                    <option value="6G77國際運籌與跨境電商全英語學分學程">國際運籌與跨境電商全英語學分學程</option>
+                                    <option value="0480全校選修">全校選修</option>
+                                    <option value="8181國文">國文</option>
+                                    <option value="8282外文">外文</option>
+                                    <option value="8383民主法治">民主法治</option>
+                                    <option value="9595生命關懷">生命關懷</option>
+                                    <option value="9696思維方法">思維方法</option>
+                                    <option value="8585體育">體育</option>
+                                    <option value="8686通識">通識</option>    
+                                                                                                                                                                                                                     
+                            </select>
+                        </div>
+                   
+                        <div class="form-group" >
+                            <label for="message">課堂年級</label>
+                            <select id ='grade'>
+                                <option  hidden>請選擇課堂年級▾</option>
+                                <option>大一</option>
+                                <option>大二</option>
+                                <option>大三</option>
+                                <option>大四</option>
+                                <option>大五</option>
+                                <option>其他</option>
+                            </select>
+                        </div>
+					
+						<div class="form-group" >
+                            <label for="message">課堂推薦度</label>
+                            <select id ='rating'>
+                                <option  hidden>請選擇課堂推薦度▾</option>
+                                <option>★</option>
+                                <option>★★</option>
+                                <option>★★★</option>
+                                <option>★★★★</option>
+                                <option>★★★★★</option>
+                            </select>
+						</div>
+						
+						<div class="form-group" >
+                            <label for="message">課堂困難度</label>
+                            <select id ='diffcult'>
+                                <option  hidden>請選擇課堂困難度▾</option>
+                                <option>★</option>
+                                <option>★★</option>
+                                <option>★★★</option>
+                                <option>★★★★</option>
+                                <option>★★★★★</option>
+                            </select>
+						</div>
+					
+                       
+                        <div class="form-control narrow">
+                            <label for="name">課程名稱</label>
+                            <input name="name" id="course_name" type="text">
+                        </div>
+                        <div class="form-control narrow">
+                            <label >老師名字</label>
+                            <input name="name" id="course_teacher" type="text">
+                        </div>
+                        <div class="form-control">
+                            <label>備註/心得</label>
+                            <textarea name="message" id="course_message" rows="3"></textarea>
+                        </div>
+
+                        <ul class="actions">
+							<li><input id='send_share' value="送出資料 賺取幣" type="button"></li>
+                        </ul>
+                </form>
+                
+               
+            </div>
+		</section>
+		<script>
+			var name = sessionStorage.getItem("key");
+			if (name == 'null'){
+				alert("請先登入");
+				window.location.href="login.html";	
+			}
+
+			$(document).ready(function(){
+				$('#send_share').click(function(){
+					var name = sessionStorage.getItem("key");
+					var course_name_val = document.getElementById("course_name").value;
+					var course_teacher_val = document.getElementById("course_teacher").value;
+					var course_message_val = document.getElementById("course_message").value;
+					var i = document.getElementById("department");
+					var department_val = i.options[i.selectedIndex].value;
+					var g = document.getElementById("grade");
+					var grade_val = g.options[g.selectedIndex].value;
+					var d = document.getElementById("diffcult");
+					var diffcult_val = d.options[d.selectedIndex].value;
+					var r = document.getElementById("rating");
+					var rating_val = r.options[r.selectedIndex].value;
+					console.log(course_name_val,course_teacher_val)
+
+					$.ajax({
+						type:'post',
+						url: "http://localhost:1993/course_share",
+						dataType: "json",
+						data:{ write_user:name ,course_name: course_name_val, course_teacher: course_teacher_val, course_message:course_message_val, department:department_val, grade:grade_val,rating:rating_val,diffcult:diffcult_val},
+						success: function(data){
+							console.log(data)
+							alert('成功送出 將轉回課程頁面')
+							window.location.href="course.html";
+							// document.getElementById("course_name").value = ''
+							// document.getElementById("course_teacher").value = ''
+						},
+						error: function (error) {
+							alert('faile')
+							console.log('failed')
+						}
+						
+					})
+				});
+			});
+		</script>
+	</body>
+</html>
+		

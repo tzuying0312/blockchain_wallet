@@ -1,0 +1,241 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>register</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="js/get_current_user.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/skel-layers.min.js"></script>
+		<script src="js/init.js"></script>
+		<link rel="stylesheet" href="assets/css/main.css" />	</head>
+	<body id="top">
+		<header id="header" class="skel-layers-fixed">
+			<nav id="nav">
+				<ul>
+					<li><a href="index.html">Home</a></li>
+					<li><a href="wallet.html">My_wallet</a></li>
+					<!-- <li><a href="pay.html">GOPAY</a></li> -->
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="course.html" >課程專區</a>
+                        <ul>
+                            <li><a href="course_share.html" >我要分享</a></li>
+                            <li><a href="course.html" >快速查詢</a></li>
+                            <li><a href="course_ask.html" >我要發問</a></li>
+                            <li><a href="course_ask.html" >發問區</a></li>
+                        </ul>
+                    </li>
+                   
+					<li><a href="login.html" id="logout_button">Logout</a></li>
+				</ul>
+			</nav>
+		</header>
+		
+		<section id="two" class="wrapper style2 special">
+			<div class="inner narrow">
+				<header>
+                    <h2>課程專區</h2>
+                    
+                </header>
+                <h3>來快速查詢喜歡的課程吧！</h3>
+                <form class="grid-form" id='share' action="#">
+                        <div class="form-group">
+                            <label for="message">學系或科目類別</label>
+                            <select id = 'search_department'>
+                                <option value="1111中國文學系">中國文學系</option>
+                                    <option value="1212歷史學系">歷史學系</option>
+                                    <option value="1313哲學系">哲學系</option>
+                                    <option value="1414政治學系">政治學系</option>
+                                    <option value="1515社會學系">社會學系</option>
+                                    <option value="1616社會工作學系">社會工作學系</option>
+                                    <option value="1717音樂學系">音樂學系</option>
+                                    <option value="2121英文學系">英文學系</option>
+                                    <option value="2222日本語文學系">日本語文學系</option>
+                                    <option value="2323德國文化學系">德國文化學系</option>
+                                    <option value="3131數學系">數學系</option>
+                                    <option value="3232物理學系">物理學系</option>
+                                    <option value="3333化學系">化學系</option>
+                                    <option value="3434微生物學系">微生物學系</option>
+                                    <option value="3535心理學系">心理學系</option>
+                                    <option value="4141法律學系">法律學系</option>
+                                    <option value="5050商學院">商學院</option>
+                                    <option value="5151經濟學系">經濟學系</option>
+                                    <option value="5252會計學系">會計學系</option>
+                                    <option value="5353企業管理學系">企業管理學系</option>
+                                    <option value="5454國際經營與貿易學系">國際經營與貿易學系</option>
+                                    <option value="5555財務工程與精算數學系">財務工程與精算數學系</option>
+                                    <option value="5656資訊管理學系">資訊管理學系</option>
+                                    <option value="7070巨量資料管理學院學士學位學程">巨量資料管理學院學士學位學程</option>
+                                    <option value="6161科技管理學程">科技管理學程</option>
+                                    <option value="6262財務金融學程">財務金融學程</option>
+                                    <option value="6464人權學程">人權學程</option>
+                                    <option value="6565綠色科學與永續發展學程">綠色科學與永續發展學程</option>
+                                    <option value="6767鑑識學程">鑑識學程</option>
+                                    <option value="6868實用英語學程">實用英語學程</option>
+                                    <option value="6969創意人文學程">創意人文學程</option>
+                                    <option value="6A71非營利組織管理學程">非營利組織管理學程</option>
+                                    <option value="6B72量資料分析學分學程">巨量資料分析學分學程</option>
+                                    <option value="6C73金融科技學程">金融科技學程</option>
+                                    <option value="6D74國貿管理全英語學程">國貿管理全英語學程</option>
+                                    <option value="6E75財經全英語學程">財經全英語學程</option>
+                                    <option value="6E76東亞人文社會研究全英語學程">東亞人文社會研究全英語學程</option>
+                                    <option value="6G77國際運籌與跨境電商全英語學分學程">國際運籌與跨境電商全英語學分學程</option>
+                                    <option value="0480全校選修">全校選修</option>
+                                    <option value="8181國文">國文</option>
+                                    <option value="8282外文">外文</option>
+                                    <option value="8383民主法治">民主法治</option>
+                                    <option value="9595生命關懷">生命關懷</option>
+                                    <option value="9696思維方法">思維方法</option>
+                                    <option value="8585體育">體育</option>
+                                    <option value="8686通識">通識</option>    
+                                                                                                                                                                                                                     
+                            </select>
+                        </div>
+                        <br>
+                        <div class="form-group" >
+                            <label for="message">年級</label>
+                            <select id ='search_grade'>
+                                <option  hidden>請選擇年級▾</option>
+                                <option>大一</option>
+                                <option>大二</option>
+                                <option>大三</option>
+                                <option>大四</option>
+                                <option>大五</option>
+                                <option>其他</option>
+                            </select>
+                        </div>
+                        <br>
+                       
+                        <div class="form-control narrow">
+                            <label for="name">課程名稱</label>
+                            <input name="name" id="search_name" type="text">
+                        </div>
+                        <div class="form-control narrow">
+                            <label >老師名字</label>
+                            <input name="email" id="search_teacher" type="email">
+                        </div>
+
+                        <!-- <p>★</p> -->
+                        <ul class="actions">
+                            <li><input id='search_button' value="立即查詢" type="button"></li>
+                        </ul>
+                            
+                </form>
+
+                <section class="wrapper style2 special">
+                    <div class="inner narrow">
+                        <header>
+                            <h3>熱門討論</h3>
+                        </header>
+                        <div class="features">
+                            <div class="feature" id="feature_1">
+                               
+                                <h3 id="feature_coursename_1"></h3>
+                                <p id="feature_message_1"></p>
+                                <p id="feature_rating_1"></p>
+                                <input value="查看全文" type="button">
+                            </div>
+                            <div class="feature" id="feature_2">
+                                <h3 id="feature_coursename_2"></h3>
+                                <p id="feature_message_2"></p>
+                                <p id="feature_rating_2"></p>
+                                <input value="查看全文" type="button">
+                            </div>
+                            <div class="feature" id="feature_3">
+                               
+                                <h3 id="feature_coursename_3"></h3>
+                                <p id="feature_message_3"></p>
+                                <p id="feature_rating_3"></p>
+                                <input value="查看全文" type="button">
+                            </div>
+                            <div class="feature" id="feature_4">
+                               
+                                <h3 id="feature_coursename_4"></h3>
+                                <p id="feature_message_4"></p>
+                                <p id="feature_rating_4"></p>
+                                <input value="查看全文" type="button">
+                            </div>
+
+                        </div>
+                        
+                    </div>
+
+                </section>
+			</div>
+        </section>
+       
+    <style>
+        #nav li {
+            display: block;
+            float: left;
+        }
+        #nav li:hover {
+            cursor: pointer;
+        }
+
+        #nav ul li ul {
+            visibility: hidden;
+            opacity: 0;
+        }
+
+        #nav ul li:hover > ul,
+        #nav ul li ul:hover {
+            visibility: visible;
+            opacity: 1;
+            display: block;
+        }
+
+        #nav ul li ul li {
+            clear: both;
+            width: 100%;
+        }
+    </style>
+     <script>
+         $(document).ready(function(){
+            $('#share_button').click(function(){
+                $("#share_div").fadeToggle();
+            })
+            $('#ask_button').click(function(){
+                $("#ask_div").fadeToggle();
+            })
+            $('#search_button').click(function(){
+                sessionStorage.setItem('search_name',$('#search_name').val())
+                sessionStorage.setItem('search_teacher',$('#search_teacher').val())
+                sessionStorage.setItem('search_grade',$('#search_name').val())
+
+            })
+         });
+         
+         $.ajax({
+				type: "get",
+				url: "http://localhost:1993/course_share",
+				dataType: "json",
+				success: function(data){
+					if(data.length != 0){
+						for ( i=1 ; i < 5 ; i++ ){
+							var course_data = data.pop()
+                            // $('#trans_sender'+i).text(trans_data['sender'])
+                            $('#feature_coursename_'+i).text(course_data['course_name'] + '/' + course_data['course_teacher'])
+                            var final = course_data['course_message'].substring(0,30)
+                            console.log(final)
+                            $('#feature_message_'+i).text('心得 ： '+final) 
+                            $('#feature_rating_'+i).text('推薦度 ： '+ course_data['rating']) 
+
+						};
+					}
+					else{
+						console.log('暫無交易資料')
+                    }
+                    console.log(data)
+					
+				},
+				error: function (error) {
+					alert("Cannot get data");
+				}
+			});
+			
+        
+     </script>
+	</body>
+</html>
+		

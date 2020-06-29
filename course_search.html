@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>register</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="js/get_current_user.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/skel-layers.min.js"></script>
+		<script src="js/init.js"></script>
+		<link rel="stylesheet" href="assets/css/main.css" />	</head>
+	<body id="top">
+		<header id="header" class="skel-layers-fixed">
+			<nav id="nav">
+				<ul>
+					<li><a href="index.html">Home</a></li>
+					<li><a href="wallet.html">My_wallet</a></li>
+					<li><a href="pay.html">GOPAY</a></li>
+					<li><a href="login.html">Login</a></li>
+					<li><a href="course.html" >課程專區</a></li>
+
+					<li><a href="login.html" id="logout_button">Logout</a></li>
+				</ul>
+			</nav>
+		</header>
+		<section id="one" class="wrapper style2 special">
+            <div id='ask_div' style='display: none;' class="inner narrow">
+                
+                <form class="grid-form" id='share' action="#">
+                   
+                        <div class="form-group">
+                            <label for="message">學系或科目類別</label>
+                            <select id = 'identity'>
+                                <option  hidden>請選擇科目類別▾</option>
+                                <option value="1111中國文學系">中國文學系</option>
+                                <option value="1212歷史學系">歷史學系</option>
+                                <option value="1313哲學系">哲學系</option>
+                                <option value="1414政治學系">政治學系</option>
+                                <option value="7070巨量資料管理學院學士學位學程">巨量資料管理學院學士學位學程</option>
+                                                                                                                                                                                                                     
+                            </select>
+                        </div>
+                        <br>
+                        <div class="form-group" >
+                            <label for="message">年級</label>
+                            <select id ='academy'>
+                                <option  hidden>請選擇年級▾</option>
+                                <option>大一</option>
+                                <option>大二</option>
+                                <option>大三</option>
+                                <option>大四</option>
+                                <option>大五</option>
+                                <option>其他</option>
+                            </select>
+                        </div>
+                        <br>
+                       
+                        <div class="form-control narrow">
+                            <label for="name">課程名稱</label>
+                            <input name="name" id="name" type="text">
+                        </div>
+                        <div class="form-control narrow">
+                            <label >老師名字</label>
+                            <input name="email" id="email" type="email">
+                        </div>
+                        <div class="form-control">
+                            <label>詢問內容 課程需求及注意事項 老師上課風格</label>
+                            <textarea name="message" id="message" rows="3"></textarea>
+                        </div>
+
+                        <ul class="actions">
+                            <li><input value="Send Message" type="submit"></li>
+                        </ul>
+                </form>
+            </div>
+
+        </section>
+		<script>
+			var name = sessionStorage.getItem("key");
+			if (name == 'null'){
+				alert("請先登入");
+				window.location.href="login.html";	
+			}
+
+			$(document).ready(function(){
+				$.ajax({
+                    type:'post',
+                    url:"http://localhost:1993/course_search",
+                    dataType: "json",
+                    success: function(data){
+                            
+                        },
+                        error: function (error) {
+                            alert("Cannot get data");
+                        }
+                });
+			});
+		</script>
+	</body>
+</html>
+		

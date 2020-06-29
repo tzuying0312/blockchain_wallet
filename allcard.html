@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>home</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css" />
+        <link rel="stylesheet" href="assets/css/main.css" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="js/skel.min.js"></script>
+        <script src="js/skel-layers.min.js"></script>
+        <script src="js/init.js"></script>
+    </head>
+    <body>
+        <header id="header" class="skel-layers-fixed">
+            <nav id="nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="wallet.html">My_wallet</a></li>
+                    <li><a href="pay.html">GOPAY</a></li>
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="login.html">Logout</a></li>
+                </ul>
+            </nav>
+		</header>
+		
+	
+        <!-- <div class="outer narrow"> -->
+		<div class="inner">
+            <br></br>
+            
+            
+            <header><h2 id="username"></h2></header>
+            <div class="upper">
+				<div class="hi">
+					<img src="images/1.jpg">
+					<br>
+					<p>東吳卡</p>
+					<input id="watch" type='button' name='submit' value='watch more' class="form-control" />
+				</div>
+				<div class="hi">
+					<img src="images/2.jpg">
+					<p>學生會卡</p>
+					<input id="watch" type='button' name='submit' value='watch more' class="form-control" />
+					<br>
+				</div>
+				<div class="hi">
+					<img src="images/3.jpg">
+					<br>
+					<p>中文系卡</p>
+					<input id="watch" type='button' name='submit' value='watch more' class="form-control" />
+					<br>
+				</div>
+            </div>
+		</div>
+	
+        <style>
+            body{
+              background-color:  rgba(144, 144, 144, 0.075);
+            }
+    
+
+			.inner{
+				display: flex;
+              	flex-direction: column;
+              	align-items: center; 
+
+			}
+			#watch{
+				
+              max-width: 35vh;
+			}
+          
+            .upper{
+              width: 80%;
+			  display: flex;
+			  align-items: center; 
+			}
+			.hi{
+				display: flex !important;
+				flex-direction: column !important;
+				justify-content: center !important;
+				align-items: center !important;
+			}
+		 
+            img{
+				max-height: 50vh;
+				max-width: 40vh;
+            }
+        </style>
+        
+        <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
+        
+		<script type="text/javascript">
+		$('#username').text('Hello,' + sessionStorage.getItem("key") +' this is all your card')
+        $(document).ready(function(){
+            $('.upper').slick({
+				slidesToShow: 1,
+				dots: true
+            });
+        });
+        </script>
+    </body>
+</html>
