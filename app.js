@@ -4,6 +4,7 @@ var app = express();
 var userSchema = require('./routes/user');
 var PaySchema = require('./routes/pay');
 var CourseshareSchema = require('./routes/course_share');
+var QuestionnaireSchema = require('./routes/questionnaire');
 var ForgotSchema = require('./routes/forgot');
 var ReserveSchema = require('./routes/reserve');
 var ReviewSchema = require('./routes/review');
@@ -411,7 +412,6 @@ function insertreview(name,star,comment){
     var year = dateObj.getUTCFullYear();
     var hour = dateObj.getHours()   
     var minute =dateObj.getMinutes() 
-
     var newdate = year + "/" + month + "/" + day + ' '+ hour +":"+ minute;
     console.log(newdate)
     var review =  new ReviewSchema({
@@ -450,6 +450,56 @@ app.post('/review', function (req, res) {
         }
         else {
             insertreview(name,star,comment);
+            res.send({status:'success',message:true})
+        }
+    })
+});
+
+/*插入數據函數*/
+function insertquestionnaire(name,url){
+    //數據格式
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+    var hour = dateObj.getHours()   
+    var minute =dateObj.getMinutes() 
+    var newdate = year + "/" + month + "/" + day + ' '+ hour +":"+ minute;
+    console.log(newdate)
+    var questionnaire =  new QuestionnaireSchema({
+                name : name,
+                url : url,
+                application_date : newdate
+            });
+    questionnaire.save(function(err,res){
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log(res);
+        }
+    })
+}
+
+
+/*註冊頁面數據接收*/
+app.post('/que', function (req, res) {
+  //處理跨域的問題
+  res.setHeader('Content-type','application/json;charset=utf-8')
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
+  res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+  res.header("X-Powered-By",' 3.2.1')
+  //先查詢有沒有這個user
+  var name = req.body.name;
+  var url = req.body.url;
+  var updatestr = {name: name};
+  QuestionnaireSchema.find(updatestr, function(err, obj){
+        if (err) {
+            console.log("Error:" + err);
+        }
+        else {
+            insertquestionnaire(name,url);
             res.send({status:'success',message:true})
         }
     })
