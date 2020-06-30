@@ -5,6 +5,7 @@ var userSchema = require('./routes/user');
 var PaySchema = require('./routes/pay');
 var CourseshareSchema = require('./routes/course_share');
 var QuestionnaireSchema = require('./routes/questionnaire');
+var Question_userSchema = require('./routes/question_user');
 var ForgotSchema = require('./routes/forgot');
 var ReserveSchema = require('./routes/reserve');
 var ReviewSchema = require('./routes/review');
@@ -507,6 +508,71 @@ app.post('/que', function (req, res) {
     })
 });
 
+app.get('/que',function(req,res){
+    res.setHeader('Content-type','application/json;charset=utf-8')
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.header("X-Powered-By",' 3.2.1')
+    QuestionnaireSchema.find({}, null, {sort: {application_date: -1}},function(err, data){
+        if (err) {
+            console.log("Error:" + err);
+        }
+        else {
+            console.log(data)
+            var data_send = data
+            res.send(JSON.stringify(data_send))
+        }
+    })
+})
+
+/*插入數據函數*/
+function insertque_user(name){
+    //數據格式
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+    var hour = dateObj.getHours()   
+    var minute =dateObj.getMinutes() 
+    var newdate = year + "/" + month + "/" + day + ' '+ hour +":"+ minute;
+    console.log(newdate)
+    var que_user =  new Question_userSchema({
+                name : name,
+                date : newdate
+            });
+    que_user.save(function(err,res){
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log(res);
+        }
+    })
+}
+
+
+/*註冊頁面數據接收*/
+app.post('/que_user', function (req, res) {
+  //處理跨域的問題
+  res.setHeader('Content-type','application/json;charset=utf-8')
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
+  res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+  res.header("X-Powered-By",' 3.2.1')
+  //先查詢有沒有這個user
+  var name = req.body.name;
+  var updatestr = {name: name};
+  Question_userSchema.find(updatestr, function(err, obj){
+        if (err) {
+            console.log("Error:" + err);
+        }
+        else {
+            insertque_user(name);
+            res.send({status:'success',message:true})
+        }
+    })
+});
 var server = app.listen(process.env.PORT || 1993, function() {
     var port = server.address().port;
     console.log('server connect port :', port);

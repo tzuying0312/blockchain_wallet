@@ -44,13 +44,51 @@
                 </table>
               </center>
             </div>
-            <header><h2>熱門活動</h2></header>
+            <header><h2>活動公告</h2></header>
             <div class="upper">
-              <div><img src="images/1.jpg">哇嗚嗚熱門活動</div>
-              <div><img src="images/2.jpg">未來會有的活動</div>
-              <div><img src="images/4.jpg">哇嗚嗚熱門活動</div>
-              <div><img src="images/5.jpg">就是要和上面區別</div>
-              <div><img src="images/3.jpg">詞窮想不到了</div>
+              <div>
+                <img src="images/8.jpg">
+                1090702
+                <p>跨校金融科技課程發表會</p>
+              </div>
+              <div>
+                <img src="images/7.jpg">
+                1090702
+                <p>區塊鏈期末作品發表會</p>
+              </div>
+              <div>
+                <img src="images/2.jpg">
+                1090711 音劇社年度公演
+                <p>《生活邊界》［場次一］</p>
+              </div>
+              <div>
+                <img src="images/3.jpg">
+                1090711 音劇社年度公演
+                <p>《生活邊界》［場次二］</p>
+              </div>
+            </div>
+            <br></br>
+            <header>
+              <h2>問卷專區</h2>
+            </header>
+            <h4>★填寫即可獲得東吳幣★</h4>
+            <div style="width: 60%;">
+              <center>
+                <table >
+                <tr>
+                  <th>問卷名稱</th>
+                  <th>發布日期</th>
+                </tr>
+                <!-- <tr>
+                  <td><a href="https://github.com/tzuying0312?tab=repositories">github</a></td>
+                  <td>2020.06.30</td>
+                </tr> -->
+                <tr>
+                  <td id = 'title'></td>
+                  <td id = 'application_date'></td>
+                </tr>
+                </table>
+              </center>
             </div>
         </div>
         <style>
@@ -85,7 +123,46 @@
             autoplay: true,
             autoplaySpeed: 2000,
             });
+        
+          $('#title').click(function(){
+            var name = sessionStorage.getItem("key")  
+            const title = document.getElementById("title").value;
+            $.ajax({
+					    type: "post",
+              url: "http://localhost:1993/que_user",
+              dataType: "json",
+              data:{name:name,title:title},
+              success: function(data){
+              //接受返回的数据，前端判断采取的动作
+                console.log(data);
+                if(data){
+                  alert(title)
+                  if(data.message == false){
+                    alert('錯誤');
+                  }
+                }
+              }
+            });
+          });
         });
         </script>
+        <script>
+          $.ajax({
+            type: "get",
+            url: "http://localhost:1993/que",
+            dataType: "json",
+            success: function(data){
+              if(data.length != 0){
+                for ( i=0 ; i < data.length ; i++ ){
+                  document.getElementById("title").innerHTML += "<a href="+data[i]['url']+">"+data[i]['title']+"</a>"+"<br/>"
+                  document.getElementById("application_date").innerHTML +=  data[i]['application_date']+ "<br/>"
+                  };
+              }
+            },
+            error: function (error) {
+              alert("Cannot get data");
+            }
+          });
+		</script>
     </body>
 </html>
