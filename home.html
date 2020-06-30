@@ -1,0 +1,174 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>home</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css" />
+        <script src="js/jquery.min.js"></script>
+        <script src="js/skel.min.js"></script>
+        <script src="js/skel-layers.min.js"></script>
+        <script src="js/init.js"></script>
+        <link rel="stylesheet" href="assets/css/main.css" />
+    </head>
+    <body>
+        <header id="header" class="skel-layers-fixed">
+            <nav id="nav">
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="wallet.html">My_wallet</a></li>
+                    <li><a href="pay.html">GOPAY</a></li>
+                    <li><a href="reserve.html">Reserve</a></li>
+                    <li><a href="index.html">Login</a></li>
+                    <li><a href="index.html">Logout</a></li>
+                </ul>
+            </nav>
+        </header>
+        <div class="outer narrow">
+            <br></br>
+            <header><h2>最新消息</h2></header>
+            <div style="width: 60%;">
+              <center>
+                <table >
+                <tr>
+                  <th>標題</th>
+                  <th>發布日期</th>
+                </tr>
+                <tr>
+                  <td>【2020.05.21】前端頁面即將完成</td>
+                  <td>2020.05.15</td>
+                </tr>
+                <tr>
+                  <td>【2020.05.28】前端部屬至AWS進行測試</td>
+                  <td>2020.05.15</td>
+                </tr>
+                </table>
+              </center>
+            </div>
+            <header><h2>活動公告</h2></header>
+            <div class="upper">
+              <div>
+                <img src="images/8.jpg">
+                1090702
+                <p>跨校金融科技課程發表會</p>
+              </div>
+              <div>
+                <img src="images/7.jpg">
+                1090702
+                <p>區塊鏈期末作品發表會</p>
+              </div>
+              <div>
+                <img src="images/2.jpg">
+                1090711 音劇社年度公演
+                <p>《生活邊界》［場次一］</p>
+              </div>
+              <div>
+                <img src="images/3.jpg">
+                1090711 音劇社年度公演
+                <p>《生活邊界》［場次二］</p>
+              </div>
+            </div>
+            <br></br>
+            <header>
+              <h2>問卷專區</h2>
+            </header>
+            <h4>★填寫即可獲得東吳幣★</h4>
+            <div style="width: 60%;">
+              <center>
+                <table >
+                <tr>
+                  <th>問卷名稱</th>
+                  <th>發布日期</th>
+                </tr>
+                <!-- <tr>
+                  <td><a href="https://github.com/tzuying0312?tab=repositories">github</a></td>
+                  <td>2020.06.30</td>
+                </tr> -->
+                <tr>
+                  <td id = 'title'></td>
+                  <td id = 'application_date'></td>
+                </tr>
+                </table>
+              </center>
+            </div>
+        </div>
+        <style>
+            body{
+              background-color:  rgba(144, 144, 144, 0.075);
+            }
+            .nav-item a{
+              color: black;
+            }
+            .outer{
+              display: flex;
+              flex-direction: column;
+              align-items: center; 
+            }
+            .upper{
+              width: 80%;
+            }
+            img{
+              max-height: 50vh;
+              max-width: 40vh;
+            }
+        </style>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
+        
+        <script type="text/javascript">
+        $(document).ready(function(){
+            $('.upper').slick({
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            dots: true,
+            autoplay: true,
+            autoplaySpeed: 2000,
+            });
+        
+          $('#title').click(function(){
+            var name = sessionStorage.getItem("key")  
+            $.ajax({
+					    type: "post",
+              url: "http://localhost:1993/que_user",
+              dataType: "json",
+              data:{name:name},
+              success: function(data){
+              //接受返回的数据，前端判断采取的动作
+                console.log(data);
+                if(data){
+                  if(data.message == false){
+                    alert('錯誤');
+                  }
+                }
+              }
+            });
+          });
+        });
+        </script>
+        <script>
+          $.ajax({
+            type: "get",
+            url: "http://localhost:1993/que",
+            dataType: "json",
+            success: function(data){
+              if(data.length != 0){
+                for ( i=0 ; i < data.length ; i++ ){
+                  document.getElementById("title").innerHTML += "<a href="+data[i]['url']+">"+data[i]['title']+"</a>"+"<br/>"
+                  document.getElementById("application_date").innerHTML +=  data[i]['application_date']+ "<br/>"
+                  };
+              }
+            },
+            error: function (error) {
+              alert("Cannot get data");
+            }
+          });
+    </script>
+      <script>
+        $(document).ready(function(){
+            $('#logout_button').click(function(){
+            console.log('remove')
+            sessionStorage.removeItem("key");
+            });
+        });
+    </script>
+    </body>
+</html>

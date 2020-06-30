@@ -15,12 +15,12 @@
 		<header id="header" class="skel-layers-fixed">
 			<nav id="nav">
 				<ul>
-					<li><a href="index.html">Home</a></li>
+					<li><a href="home.html">Home</a></li>
 					<li><a href="wallet.html">My_wallet</a></li>
                     <li><a href="pay.html">GOPAY</a></li>
                     <li><a href="reserve.html">Reserve</a></li>
-					<li><a href="login.html">Login</a></li>
-					<li><a href="login.html" id="logout_button">Logout</a></li>
+					<li><a href="index.html">Login</a></li>
+					<li><a href="index.html" id="logout_button">Logout</a></li>
 				</ul>
 			</nav>
 		</header>
@@ -55,7 +55,7 @@
 			var name = sessionStorage.getItem("key");
 			if (name == 'null'){
 				alert("請先登入");
-				window.location.href="login.html";	
+				window.location.href="index.html";	
 			}
 			// document.getElementById("username").innerHTML = sessionStorage.getItem("key");
 			$('#username').text('Hello,' + sessionStorage.getItem("key"))

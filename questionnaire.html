@@ -13,12 +13,12 @@
 		<header id="header" class="skel-layers-fixed">
 			<nav id="nav">
 				<ul>
-					<li><a href="index.html">Home</a></li>
+					<li><a href="home.html">Home</a></li>
 					<li><a href="wallet.html">My_wallet</a></li>
 					<li><a href="pay.html">GOPAY</a></li>
 					<li><a href="reserve.html">Reserve</a></li>
-					<li><a href="login.html">Login</a></li>
-					<li><a href="login.html">Logout</a></li>
+					<li><a href="index.html">Login</a></li>
+					<li><a href="index.html">Logout</a></li>
 				</ul>
 			</nav>
 		</header>
@@ -48,7 +48,7 @@
         var name = sessionStorage.getItem("key");
         if (name == 'null'){
             alert("請先登入");
-            window.location.href="login.html";	
+            window.location.href="index.html";	
         }
 		$(document).ready(function(){
 			$("#send").click(function(){
@@ -69,7 +69,7 @@
 						}
 						else{
 							alert('收到申請，請至問卷專區查看');
-							window.location.href="index.html";	
+							window.location.href="home.html";	
 						}
 					}
 					}
