@@ -455,7 +455,10 @@ app.post('/review', function (req, res) {
     })
 });
 
-app.listen(1993, () =>console.log('Example app listening on port 3000!'))
+var server = app.listen(process.env.PORT || 1993, function() {
+    var port = server.address().port;
+    console.log('server connect port :', port);
+});
 
 
 
