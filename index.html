@@ -161,6 +161,14 @@
               alert("Cannot get data");
             }
           });
-		</script>
+    </script>
+      <script>
+        $(document).ready(function(){
+            $('#logout_button').click(function(){
+            console.log('remove')
+            sessionStorage.removeItem("key");
+            });
+        });
+    </script>
     </body>
 </html>

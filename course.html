@@ -164,56 +164,55 @@
 			</div>
         </section>
        
-    <style>
-        #nav li {
-            display: block;
-            float: left;
-        }
-        #nav li:hover {
-            cursor: pointer;
-        }
+        <style>
+            #nav li {
+                display: block;
+                float: left;
+            }
+            #nav li:hover {
+                cursor: pointer;
+            }
 
-        #nav ul li ul {
-            visibility: hidden;
-            opacity: 0;
-        }
+            #nav ul li ul {
+                visibility: hidden;
+                opacity: 0;
+            }
 
-        #nav ul li:hover > ul,
-        #nav ul li ul:hover {
-            visibility: visible;
-            opacity: 1;
-            display: block;
-        }
+            #nav ul li:hover > ul,
+            #nav ul li ul:hover {
+                visibility: visible;
+                opacity: 1;
+                display: block;
+            }
 
-        #nav ul li ul li {
-            clear: both;
-            width: 100%;
-        }
-    </style>
-     <script>
-         $(document).ready(function(){
-            $('#share_button').click(function(){
-                $("#share_div").fadeToggle();
-            })
-            $('#ask_button').click(function(){
-                $("#ask_div").fadeToggle();
-            })
-            $('#search_button').click(function(){
-                sessionStorage.setItem('search_name',$('#search_name').val())
-                sessionStorage.setItem('search_teacher',$('#search_teacher').val())
-                sessionStorage.setItem('search_grade',$('#search_name').val())
+            #nav ul li ul li {
+                clear: both;
+                width: 100%;
+            }
+        </style>
+        <script>
+            $(document).ready(function(){
+                $('#share_button').click(function(){
+                    $("#share_div").fadeToggle();
+                })
+                $('#ask_button').click(function(){
+                    $("#ask_div").fadeToggle();
+                })
+                $('#search_button').click(function(){
+                    sessionStorage.setItem('search_name',$('#search_name').val())
+                    sessionStorage.setItem('search_teacher',$('#search_teacher').val())
+                    sessionStorage.setItem('search_grade',$('#search_name').val())
 
-            })
-         });
-         
-         $.ajax({
-				type: "get",
-				url: "http://localhost:1993/course_share",
-				dataType: "json",
-				success: function(data){
-					if(data.length != 0){
-						for ( i=1 ; i < 5 ; i++ ){
-							var course_data = data.pop()
+                })
+            });
+            $.ajax({
+                type: "get",
+                url: "http://localhost:1993/course_share",
+                dataType: "json",
+                success: function(data){
+                    if(data.length != 0){
+                        for ( i=1 ; i < 5 ; i++ ){
+                            var course_data = data.pop()
                             // $('#trans_sender'+i).text(trans_data['sender'])
                             $('#feature_coursename_'+i).text(course_data['course_name'] + '/' + course_data['course_teacher'])
                             var final = course_data['course_message'].substring(0,30)
@@ -221,21 +220,27 @@
                             $('#feature_message_'+i).text('心得 ： '+final) 
                             $('#feature_rating_'+i).text('推薦度 ： '+ course_data['rating']) 
 
-						};
-					}
-					else{
-						console.log('暫無交易資料')
+                        };
+                    }
+                    else{
+                        console.log('暫無交易資料')
                     }
                     console.log(data)
-					
-				},
-				error: function (error) {
-					alert("Cannot get data");
-				}
-			});
-			
-        
-     </script>
+                    
+                },
+                error: function (error) {
+                    alert("Cannot get data");
+                }
+            });
+        </script>
+        <script>
+            $(document).ready(function(){
+                $('#logout_button').click(function(){
+                console.log('remove')
+                sessionStorage.removeItem("key");
+                });
+            });
+        </script>
 	</body>
 </html>
 		
