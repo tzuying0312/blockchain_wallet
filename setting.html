@@ -57,6 +57,13 @@
 			});	
 		</script>
 		<script>
+			var name = sessionStorage.getItem("key");
+			if (name == 'null'){
+				alert("請先登入");
+				window.location.href="index.html";	
+			}
+		</script>
+		<script>
 			$(document).ready(function(){
 				$('#logout_button').click(function(){
 				console.log('remove')
