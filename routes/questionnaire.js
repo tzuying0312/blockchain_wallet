@@ -3,6 +3,7 @@ var mongoose = require('./db'),
 
 var PaySchema = new Schema({
     name : String,
+    title : String,
     url : String,
     application_date : String,
 })

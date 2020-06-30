@@ -456,7 +456,7 @@ app.post('/review', function (req, res) {
 });
 
 /*插入數據函數*/
-function insertquestionnaire(name,url){
+function insertquestionnaire(name,title,url){
     //數據格式
     var dateObj = new Date();
     var month = dateObj.getUTCMonth() + 1; //months from 1-12
@@ -468,6 +468,7 @@ function insertquestionnaire(name,url){
     console.log(newdate)
     var questionnaire =  new QuestionnaireSchema({
                 name : name,
+                title : title,
                 url : url,
                 application_date : newdate
             });
@@ -492,6 +493,7 @@ app.post('/que', function (req, res) {
   res.header("X-Powered-By",' 3.2.1')
   //先查詢有沒有這個user
   var name = req.body.name;
+  var title = req.body.title;
   var url = req.body.url;
   var updatestr = {name: name};
   QuestionnaireSchema.find(updatestr, function(err, obj){
@@ -499,7 +501,7 @@ app.post('/que', function (req, res) {
             console.log("Error:" + err);
         }
         else {
-            insertquestionnaire(name,url);
+            insertquestionnaire(name,title,url);
             res.send({status:'success',message:true})
         }
     })

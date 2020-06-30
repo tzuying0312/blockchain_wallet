@@ -25,16 +25,19 @@
 		<section id="two" class="wrapper style2 special">
 			<div class="inner narrow">
 				<header>
-                    <h2>請填寫問卷網址</h2>
+                    <h2>請填寫問卷標題及網址</h2>
 					<h4>★需支付東吳幣★</h4>
 				</header>
 				<form class="grid-form" method="post" action="#">
+                    <div class="form-control">
+						<label for="title">title</label>
+                        <input name="title" id="title" >
+					</div>
 					<div class="form-control">
 						<label for="url">url</label>
-						<input name="url" id="url" type="email">
-					</div>
+                        <input name="url" id="url" type="email">
+                    </div>
 					<ul class="actions">
-						<!-- <li><input id="send" value="Send" type="submit"></li> -->
 						<input id="send" type='button' name='submit' value='Send' />
 					</ul>
 				</form>
@@ -50,13 +53,15 @@
 		$(document).ready(function(){
 			$("#send").click(function(){
                 var name = sessionStorage.getItem("key");
-				const urlElement = document.getElementById("url");
+				const titleElement = document.getElementById("title");
+                const title = document.getElementById("title").value;
+                const urlElement = document.getElementById("url");
 				const url = document.getElementById("url").value;
 				$.ajax({
 					type: "post",
 					url: "http://localhost:1993/que",
 					dataType: "json",
-					data:{name:name,url:url},
+					data:{name:name,title:title,url:url},
 					success: function(data){
 					//接受返回的数据，前端判断采取的动作
 					console.log(data);
