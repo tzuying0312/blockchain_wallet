@@ -11,19 +11,36 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
 	</head>
 	<body id="top">
-		<header id="header" class="skel-layers-fixed">
-			<nav id="nav">
-				<ul>
-					<li><a href="home.html">Home</a></li>
-					<li><a href="wallet.html">My_wallet</a></li>
-					<li><a href="pay.html">GOPAY</a></li>
-					<li><a href="reserve.html">Reserve</a></li>
-					<li><a href="index.html">Login</a></li>
-					<li><a href="course.html" >課程專區</a></li>
-					<li ><a href="index.html" id="logout_button">Logout</a></li>
-				</ul>
-			</nav>
-		</header>
+        <header id="header" class="skel-layers-fixed">
+            <nav id="nav">
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="reserve.html">Reserve</a></li>
+                <li><a href="course.html" >課程專區</a>
+                <ul>
+                    <li><a href="course_share.html" >我要分享</a></li>
+                    <li><a href="course.html" >快速查詢</a></li>
+                    <li><a href="course_ask.html" >我要發問</a></li>
+                    <li><a href="course_ask.html" >發問區</a></li>
+                </ul>
+                </li>
+                <li><a href="wallet.html">My_wallet</a>
+                <ul>
+                    <li><a href="wallet.html">交易紀錄</a></li>
+                    <li><a href="pay.html">GOPAY</a></li>
+                </ul>
+                </li>
+                <li><a href="setting.html" >個人帳戶</a>
+                <ul>
+					<li><a href="setting.html" >個人資訊</a>
+                    <li><a href="allcard.html" >Card</a></li>
+                    <li><a href="index.html">Login</a></li>
+                    <li><a href="index.html" id="logout_button">Logout</a></li>
+                </ul>
+                </li>
+            </ul>
+            </nav>
+        </header>
 		<section id="two" class="wrapper style2 special">
 			<div class="inner narrow">
 				<header>
@@ -122,6 +139,32 @@
 			})
 		  </script>
 	</body>
+	<style>
+		#nav li {
+			display: block;
+			float: left;
+		}
+		#nav li:hover {
+			cursor: pointer;
+		}
+
+		#nav ul li ul {
+			visibility: hidden;
+			opacity: 0;
+		}
+
+		#nav ul li:hover > ul,
+		#nav ul li ul:hover {
+			visibility: visible;
+			opacity: 1;
+			display: block;
+		}
+
+		#nav ul li ul li {
+			clear: both;
+			width: 100%;
+		}
+	</style>
 
 </html>
 
