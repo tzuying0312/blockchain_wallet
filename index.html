@@ -126,17 +126,15 @@
         
           $('#title').click(function(){
             var name = sessionStorage.getItem("key")  
-            const title = document.getElementById("title").value;
             $.ajax({
 					    type: "post",
               url: "http://localhost:1993/que_user",
               dataType: "json",
-              data:{name:name,title:title},
+              data:{name:name},
               success: function(data){
               //接受返回的数据，前端判断采取的动作
                 console.log(data);
                 if(data){
-                  alert(title)
                   if(data.message == false){
                     alert('錯誤');
                   }
