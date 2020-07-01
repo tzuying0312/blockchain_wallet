@@ -10,6 +10,47 @@
 		<script src="js/init.js"></script>
 		<link rel="stylesheet" href="assets/css/main.css" />	</head>
 	<body id="top">
+		<header id="header" class="skel-layers-fixed">
+			<nav id="nav">
+				<ul>
+					<li><a href="index.html">Home</a></li>
+					<li><a href="wallet.html">My_wallet</a></li>
+					<li><a href="pay.html">GOPAY</a></li>
+					<li><a href="login.html">Login</a></li>
+					<li><a href="course.html" >課程專區</a></li>
+
+					<li><a href="login.html" id="logout_button">Logout</a></li>
+				</ul>
+			</nav>
+        </header>
+        
+        <section class="wrapper style2 special">
+            <div class="inner narrow">
+                <header>
+                    <h3>熱門討論</h3>
+                </header>
+                <div class="features">
+                    <div class="feature_se" id="feature_1">
+                       
+                        <h3 id="feature_coursename_1"></h3>
+                        <p id="feature_message_1"></p>
+                        <p id="feature_rating_1"></p>
+                        <input value="查看全文" type="button">
+                    </div>
+                    <div class="feature_se" id="feature_2">
+                        <h3 id="feature_coursename_2"></h3>
+                        <p id="feature_message_2"></p>
+                        <p id="feature_rating_2"></p>
+                        <input value="查看全文" type="button">
+                    </div>
+                    <div class="feature_se" id="feature_3">
+                       
+                        <h3 id="feature_coursename_3"></h3>
+                        <p id="feature_message_3"></p>
+                        <p id="feature_rating_3"></p>
+                        <input value="查看全文" type="button">
+                    </div>
+                    <div class="feature_se" id="feature_4">
         <header id="header" class="skel-layers-fixed">
             <nav id="nav">
             <ul>
@@ -72,26 +113,18 @@
                         </div>
                         <br>
                        
-                        <div class="form-control narrow">
-                            <label for="name">課程名稱</label>
-                            <input name="name" id="name" type="text">
-                        </div>
-                        <div class="form-control narrow">
-                            <label >老師名字</label>
-                            <input name="email" id="email" type="email">
-                        </div>
-                        <div class="form-control">
-                            <label>詢問內容 課程需求及注意事項 老師上課風格</label>
-                            <textarea name="message" id="message" rows="3"></textarea>
-                        </div>
+                        <h3 id="feature_coursename_4"></h3>
+                        <p id="feature_message_4"></p>
+                        <p id="feature_rating_4"></p>
+                        <input value="查看全文" type="button">
+                    </div>
 
-                        <ul class="actions">
-                            <li><input value="Send Message" type="submit"></li>
-                        </ul>
-                </form>
+                </div>
+                
             </div>
 
         </section>
+		
 		<script>
 			var name = sessionStorage.getItem("key");
 			if (name == 'null'){
@@ -100,12 +133,30 @@
 			}
 
 			$(document).ready(function(){
+                var search_name = sessionStorage.getItem('search_name')
+                var search_teacher = sessionStorage.getItem('search_teacher')
+                var search_grade = sessionStorage.getItem('search_grade')
+                var search_department = sessionStorage.getItem('search_department')
 				$.ajax({
                     type:'post',
                     url:"http://localhost:1993/course_search",
                     dataType: "json",
+                    data:{search_name:search_name,search_teacher:search_teacher,search_grade:search_grade,search_department:search_department},
                     success: function(data){
-                            
+                        console.log(data)
+                        if(data.length != 0){
+                        var data_len = data.length;
+						for ( i=1 ; i < data_len+1; i++ ){
+							var course_data = data.pop()
+                            // $('#trans_sender'+i).text(trans_data['sender'])
+                            $('#feature_coursename_'+i).text(course_data['course_name'] + '/' + course_data['course_teacher'])
+                            var final = course_data['course_message'].substring(0,30)
+                            console.log(final)
+                            $('#feature_message_'+i).text('心得 ： '+final) 
+                            $('#feature_rating_'+i).text('推薦度 ： '+ course_data['rating']) 
+
+						};
+					        }
                         },
                         error: function (error) {
                             alert("Cannot get data");
@@ -154,4 +205,3 @@
         }
     </style>
 </html>
-		
