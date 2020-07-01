@@ -198,9 +198,29 @@ app.get('/pay/outrecord/:user',function(req,res){
         }
     })
 })
+// FIXME: course
+app.post('/course_search',function(req,res){
+    var search_name = req.body.search_name
+    var search_teacher = req.body.search_teacher
+    var search_department = req.body.search_department
+    var search_grade = req.body.search_grade
+
+    CourseshareSchema.find({$or :[{'course_name':search_name},{'course_teacher':search_teacher},
+            {'department':search_department},{'grade':search_grade}]}, function(err, data) {
+                if (!err) { 
+                    console.log(data);
+                    var data_send = data
+                    console.log(data_send[0])
+                    res.send(JSON.stringify(data_send))
+                  
+                }
+                else {
+                    throw err;
+                }
+            });
+})
 
 app.get('/course_share',function(req,res){
-    console.log('hihi')
     CourseshareSchema.find({}, function(err, data) {
         if (!err) { 
             console.log(data);
