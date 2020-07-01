@@ -4,6 +4,7 @@ var app = express();
 var userSchema = require('./routes/user');
 var PaySchema = require('./routes/pay');
 var CourseshareSchema = require('./routes/course_share');
+var CourseaskSchema = require('./routes/course_ask');
 var QuestionnaireSchema = require('./routes/questionnaire');
 var Question_userSchema = require('./routes/question_user');
 var ForgotSchema = require('./routes/forgot');
@@ -221,6 +222,7 @@ app.post('/course_search',function(req,res){
 })
 
 app.get('/course_share',function(req,res){
+
     CourseshareSchema.find({}, function(err, data) {
         if (!err) { 
             console.log(data);
@@ -268,6 +270,64 @@ app.post('/course_share',function(req,res){
     });
     console.log(courseshare)
     courseshare.save(function(err,res){
+        if(err){
+            console.log(err);
+
+        }
+        else{
+            console.log(res);
+            // res.send({status:'success',message:true})
+        }
+    })
+    res.send({status:'success',message:true})
+
+
+});
+app.get('/course_ask',function(req,res){
+
+    CourseaskSchema.find({}, function(err, data) {
+        if (!err) { 
+            console.log(data);
+            var data_send = data
+            console.log(data_send[0])
+            res.send(JSON.stringify(data_send))
+          
+        }
+        else {
+            throw err;
+        }
+    });
+});
+
+app.post('/course_ask',function(req,res){
+
+    var write_user = req.body.write_user;
+    var course_name = req.body.course_name;
+    var course_teacher = req.body.course_teacher;
+    var course_askmessage = req.body.course_askmessage;
+    var department = req.body.department;
+    var grade = req.body.grade;
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+    var hour = dateObj.getHours()   
+    var minute =dateObj.getMinutes() 
+
+    var newdate = year + "/" + month + "/" + day + ' '+ hour +":"+ minute;
+    console.log(newdate)
+
+    var courseask =  new CourseaskSchema({
+        write_user : write_user,
+        course_name: course_name, 
+        course_teacher: course_teacher, 
+        course_askmessage:course_askmessage, 
+        department:department, 
+        grade:grade,
+        askdate: newdate,
+    });
+    console.log(courseask)
+    courseask.save(function(err,res){
         if(err){
             console.log(err);
 

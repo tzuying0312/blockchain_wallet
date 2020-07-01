@@ -44,37 +44,30 @@
         <section class="wrapper style2 special">
             <div class="inner narrow">
                 <header>
-                    <h3>快速查詢結果</h3>
+                    <h3>回答問題</h3>
                 </header>
                 <div class="features">
-                    <div class="feature_se" id="feature_1">
+                    <div class="feature_justone" id="feature_1">
                        
                         <h3 id="feature_coursename_1"></h3>
                         <p id="feature_message_1"></p>
-                        <p id="feature_rating_1"></p>
-                        <input value="查看全文" type="button">
-                    </div>
-                    <div class="feature_se" id="feature_2">
-                        <h3 id="feature_coursename_2"></h3>
-                        <p id="feature_message_2"></p>
-                        <p id="feature_rating_2"></p>
-                        <input value="查看全文" type="button">
-                    </div>
-                    <div class="feature_se" id="feature_3">
-                       
-                        <h3 id="feature_coursename_3"></h3>
-                        <p id="feature_message_3"></p>
-                        <p id="feature_rating_3"></p>
-                        <input value="查看全文" type="button">
-                    </div>
-                    <div class="feature_se" id="feature_4">
-                       
-                        <h3 id="feature_coursename_4"></h3>
-                        <p id="feature_message_4"></p>
-                        <p id="feature_rating_4"></p>
-                        <input value="查看全文" type="button">
-                    </div>
+                        <p id="feature_askdate_1"></p>
+                        <!-- <input value="查看全部問題" type="button"> -->
+                        <br>
+                        <p>----------------------------------------------</p>
+                        
+                        <div class="form-control">
+                            <label>備註/心得</label>
+                            <textarea name="message" id="course_message" rows="1"></textarea>
+                        </div>
+                        <br>
+                        <ul class="actions">
+							<li><input id='send_share' value="回答問題 賺取幣" type="button"></li>
+                        </ul>
 
+                        <h3>回答區</h3>
+                        <p></p>
+                    </div>
                 </div>
                 
             </div>
@@ -89,40 +82,12 @@
 			}
 
 			$(document).ready(function(){
-                var search_name = sessionStorage.getItem('search_name')
-                var search_teacher = sessionStorage.getItem('search_teacher')
-                var search_grade = sessionStorage.getItem('search_grade')
-                var search_department = sessionStorage.getItem('search_department')
-				$.ajax({
-                    type:'post',
-                    url:"http://localhost:1993/course_search",
-                    dataType: "json",
-                    data:{search_name:search_name,search_teacher:search_teacher,search_grade:search_grade,search_department:search_department},
-                    success: function(data){
-                        console.log(data)
-                        if(data.length != 0){
-                        var data_len = data.length;
-						for ( i=1 ; i <5; i++ ){
-                            if(i<data_len+1){
-                            var course_data = data.pop()
-                            // $('#trans_sender'+i).text(trans_data['sender'])
-                            $('#feature_coursename_'+i).text(course_data['course_name'] + '/' + course_data['course_teacher'])
-                            var final = course_data['course_message'].substring(0,30)
-                            console.log(final)
-                            $('#feature_message_'+i).text('心得 ： '+final) 
-                            $('#feature_rating_'+i).text('推薦度 ： '+ course_data['rating']) 
-                            }
-                            else{
-                                console.log(i)
-                                document.getElementById('feature_'+i).style.display = 'none';
-                            }
-						};
-					        }
-                        },
-                        error: function (error) {
-                            alert("Cannot get data");
-                        }
-                });
+                var name = sessionStorage.getItem('ask_name')
+                var message = sessionStorage.getItem('ask_message')
+                var date = sessionStorage.getItem('ask_date')
+                $('#feature_coursename_1').text(name)
+                $('#feature_message_1').text(message)
+                $('#feature_askdate_1').text(date)
 			});
         </script>
         <script>

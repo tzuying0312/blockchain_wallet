@@ -2719,6 +2719,14 @@
 		justify-content: center;
 		margin-bottom: 2em;
 	}
+
+	.feature_justone {
+		padding: 1.3em 1.3em 0.1em 1.3em;
+		border-style: solid;
+		border-width: 0.1px;
+		margin: 15px;
+		width: 100%;
+	}
 	
 	.feature_se {
 		padding: 1.3em 1.3em 0.1em 1.3em;

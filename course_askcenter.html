@@ -44,35 +44,35 @@
         <section class="wrapper style2 special">
             <div class="inner narrow">
                 <header>
-                    <h3>快速查詢結果</h3>
+                    <h3>發問區內容</h3>
                 </header>
                 <div class="features">
                     <div class="feature_se" id="feature_1">
                        
                         <h3 id="feature_coursename_1"></h3>
                         <p id="feature_message_1"></p>
-                        <p id="feature_rating_1"></p>
-                        <input value="查看全文" type="button">
+                        <p id="feature_askdate_1"></p>
+                        <input value="查看全部問題" class='watch_button' type="button">
                     </div>
                     <div class="feature_se" id="feature_2">
                         <h3 id="feature_coursename_2"></h3>
                         <p id="feature_message_2"></p>
-                        <p id="feature_rating_2"></p>
-                        <input value="查看全文" type="button">
+                        <p id="feature_askdate_2"></p>
+                        <input value="查看全部問題" class='watch_button' type="button">
                     </div>
                     <div class="feature_se" id="feature_3">
                        
                         <h3 id="feature_coursename_3"></h3>
                         <p id="feature_message_3"></p>
-                        <p id="feature_rating_3"></p>
-                        <input value="查看全文" type="button">
+                        <p id="feature_askdate_3"></p>
+                        <input value="查看全部問題" class='watch_button' type="button">
                     </div>
                     <div class="feature_se" id="feature_4">
                        
                         <h3 id="feature_coursename_4"></h3>
                         <p id="feature_message_4"></p>
-                        <p id="feature_rating_4"></p>
-                        <input value="查看全文" type="button">
+                        <p id="feature_askdate_4"></p>
+                        <input value="查看全部問題" class='watch_button' type="button">
                     </div>
 
                 </div>
@@ -89,43 +89,55 @@
 			}
 
 			$(document).ready(function(){
-                var search_name = sessionStorage.getItem('search_name')
-                var search_teacher = sessionStorage.getItem('search_teacher')
-                var search_grade = sessionStorage.getItem('search_grade')
-                var search_department = sessionStorage.getItem('search_department')
+                
 				$.ajax({
-                    type:'post',
-                    url:"http://localhost:1993/course_search",
-                    dataType: "json",
-                    data:{search_name:search_name,search_teacher:search_teacher,search_grade:search_grade,search_department:search_department},
-                    success: function(data){
+                type: "get",
+                url: "http://localhost:1993/course_ask",
+                dataType: "json",
+                success: function(data){
+                    if(data.length != 0){
+                        console.log(data.length)
                         console.log(data)
-                        if(data.length != 0){
-                        var data_len = data.length;
-						for ( i=1 ; i <5; i++ ){
-                            if(i<data_len+1){
-                            var course_data = data.pop()
-                            // $('#trans_sender'+i).text(trans_data['sender'])
-                            $('#feature_coursename_'+i).text(course_data['course_name'] + '/' + course_data['course_teacher'])
-                            var final = course_data['course_message'].substring(0,30)
-                            console.log(final)
-                            $('#feature_message_'+i).text('心得 ： '+final) 
-                            $('#feature_rating_'+i).text('推薦度 ： '+ course_data['rating']) 
+                        var ask_data = data.pop()
+                        for ( i=0 ; i < 5 ; i++ ){
+                            if(i<data.length+1){
+                                $('#feature_coursename_'+i).text(ask_data['course_name'] + '/' + ask_data['course_teacher'])
+                                var final = ask_data['course_askmessage'].substring(0,30)
+                                console.log(final)
+                                $('#feature_message_'+i).text('發問事項 ： '+final) 
+                                $('#feature_askdate_'+i).text('發問日期 ：'+ask_data['askdate'])
+                            
                             }
                             else{
-                                console.log(i)
                                 document.getElementById('feature_'+i).style.display = 'none';
                             }
-						};
-					        }
-                        },
-                        error: function (error) {
-                            alert("Cannot get data");
-                        }
+                            
+
+                        };
+                    }
+                    else{
+                        console.log('暫無交易資料')
+                    }
+                    console.log(data)
+                    
+                },
+                error: function (error) {
+                    alert("Cannot get data");
+                }
+            });
+            });
+            $(document).ajaxStop(function () {
+                $('.watch_button').click(function(){
+                    var num = $(this).parent().attr("id").substring(8,9);
+                    console.log(num)
+                    sessionStorage.setItem('ask_name',document.getElementById('feature_coursename_'+num).innerHTML)
+                    sessionStorage.setItem('ask_message',document.getElementById('feature_message_'+num).innerHTML)
+                    sessionStorage.setItem('ask_date',document.getElementById('feature_askdate_'+num).innerHTML)
+                    window.location.href='course_askone.html'
                 });
-			});
-        </script>
-        <script>
+            });
+         
+
             $(document).ready(function(){
                 $('#logout_button').click(function(){
                 console.log('remove')
