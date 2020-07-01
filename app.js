@@ -594,7 +594,7 @@ app.get('/que',function(req,res){
     res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
     res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
     res.header("X-Powered-By",' 3.2.1')
-    QuestionnaireSchema.find({}, null, {sort: {application_date: -1}},function(err, data){
+    QuestionnaireSchema.find({}, null, {sort:{_id:-1}},function(err, data){
         if (err) {
             console.log("Error:" + err);
         }
