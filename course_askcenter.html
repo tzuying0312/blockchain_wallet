@@ -20,7 +20,7 @@
                       <li><a href="course_share.html" >我要分享</a></li>
                       <li><a href="course.html" >快速查詢</a></li>
                       <li><a href="course_ask.html" >我要發問</a></li>
-                      <li><a href="course_ask.html" >發問區</a></li>
+                      <li><a href="course_askcenter.html" >發問區</a></li>
                   </ul>
                 </li>
                 <li><a href="wallet.html">My_wallet</a>
@@ -100,12 +100,12 @@
                         console.log(data)
                         var ask_data = data.pop()
                         for ( i=0 ; i < 5 ; i++ ){
-                            if(i<data.length+1){
-                                $('#feature_coursename_'+i).text(ask_data['course_name'] + '/' + ask_data['course_teacher'])
-                                var final = ask_data['course_askmessage'].substring(0,30)
+                            if(i<data.length){
+                                $('#feature_coursename_'+i).text(data[i]['course_name'] + '/' + data[i]['course_teacher'])
+                                var final = data[i]['course_askmessage'].substring(0,30)
                                 console.log(final)
                                 $('#feature_message_'+i).text('發問事項 ： '+final) 
-                                $('#feature_askdate_'+i).text('發問日期 ：'+ask_data['askdate'])
+                                $('#feature_askdate_'+i).text('發問日期 ：'+data[i]['askdate'])
                             
                             }
                             else{
@@ -178,4 +178,3 @@
         }
     </style>
 </html>
-		
